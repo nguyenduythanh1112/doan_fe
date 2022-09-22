@@ -8,17 +8,21 @@ import Register from './component/register';
 import Home from './component/home';
 import Header from './component/header';
 import Footer from './component/footer';
+import UpdatingBook from './component/updatingbook';
 import { createContext, useState } from 'react';
-
+import { isExpired, decodeToken } from 'react-jwt';
 export const UserInformation = createContext();
 
 function App() {
 
   const [userInformation, setUserInformation] = useState(() => {
-    const accessToken = localStorage.getItem("bookstoretoken");
+
+    let accessToken = localStorage.getItem("bookstoretoken");
+    accessToken = accessToken ? accessToken : "none";
+    const payload = decodeToken(accessToken);
     return {
-      role: "user",
-      isLogin: false,
+      role: payload && payload.role ? payload.role : "user",
+      isLogin: isExpired(accessToken) ? false : true,
       accessToken: accessToken ? accessToken : ""
     }
   });
@@ -35,6 +39,7 @@ function App() {
             <Route path="/logout" element={<Logout />} />
             <Route path="/register" element={<Register />} />
             <Route path="/addingbook" element={<AddingBook />} />
+            <Route path="/updatingbook/:id" element={<UpdatingBook />}></Route>
           </Routes>
           <Footer></Footer>
         </BrowserRouter>

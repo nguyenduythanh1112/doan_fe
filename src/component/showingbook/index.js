@@ -60,14 +60,24 @@ function ShowingBook() {
                             <td>{value.description}</td>
                             <td>{value.author}</td>
                             <td>
-                                <Link to="/">Edit </Link>
-                                <Link to="/">Delete</Link>
+                                {userInformation.role != "user"
+                                    ?
+                                    <div>
+                                        <Link to={`/updatingbook/${value.id}`}>Update</Link>
+                                        <Link to="/">Delete</Link>
+                                    </div>
+                                    :
+                                    <div>
+                                        <Link to="/">Add to cart</Link>
+                                    </div>
+                                }
+
                             </td>
                         </tr>
                     )
                 })}
             </table>
-        </div>
+        </div >
     );
 }
 

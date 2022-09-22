@@ -23,8 +23,10 @@ function AddingBook() {
     })
     const [file, setFile] = useState({ image: "", file: "" })
 
+    const [loading, setLoading] = useState(false);
+
     function fetchData() {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             var myHeaders = new Headers();
             console.log("book.file " + book.file)
             console.log("book.image " + book.image)
@@ -49,9 +51,15 @@ function AddingBook() {
                 headers: myHeaders,
                 body: urlencoded,
             };
-            const respond = fetch("http://localhost:8080/api/book", requestOptions);
+            const respond = await fetch("http://localhost:8080/api/book", requestOptions);
+            if (respond.ok) {
+                const data = await respond.text();
+                alert("success: " + data);
+                console.log(data)
+            }
             console.log(respond);
-            resolve();
+            setLoading(() => false);
+            // resolve()
         })
     }
 
@@ -62,7 +70,7 @@ function AddingBook() {
                 getDownloadURL(imageRef).then(url => {
                     // setBook((prev) => ({ ...prev, image: url }));
                     book = { ...book, image: url }
-                    console.log(url);
+                    console.log("Image : " + url);
                     resolve();
                 })
             })
@@ -75,8 +83,8 @@ function AddingBook() {
             uploadBytes(fileRef, file.file).then(() => {
                 getDownloadURL(fileRef).then(url => {
                     // setBook((prev) => ({ ...prev, file: url }));
-                    book = { ...book, image: url }
-                    console.log(url);
+                    book = { ...book, file: url }
+                    console.log("File : ", url, book);
                     resolve();
                 })
             })
@@ -86,6 +94,9 @@ function AddingBook() {
     const handleAddingBook = async () => {
 
         if (file.image && file.file) {
+
+            setLoading(true);
+
             await uploadImage();
             await uploadFile();
             await fetchData();
@@ -94,6 +105,11 @@ function AddingBook() {
             alert("error")
         }
     }
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
     return (
         <div>
             AddingBook

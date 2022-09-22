@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { UserInformation } from '../../App';
+import { decodeToken } from 'react-jwt';
 
 function Login() {
 
@@ -35,7 +36,9 @@ function Login() {
             })
             .then(result => {
                 console.log(result);
-                setUserInformation({ ...userInformation, isLogin: true, accessToken: result })
+                const accessToken = result;
+                const payload = decodeToken(accessToken);
+                setUserInformation({ ...userInformation, isLogin: true, accessToken: accessToken, role: payload.role })
                 localStorage.setItem("bookstoretoken", result);
                 alert("success")
             })
