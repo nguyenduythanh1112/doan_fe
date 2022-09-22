@@ -39,6 +39,7 @@ function ShowingBook() {
     return (
         <div>
             ShowingBook
+            <Link to="/addingbook">Add book</Link>
             <table>
                 <tr>
                     <th>Image</th>
