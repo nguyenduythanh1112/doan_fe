@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router";
-import { UserInformation } from '../../App';
+import { UserInformation } from '../../../App';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storageFirebase } from '../../config/Firebase';
+import { storageFirebase } from '../../../config/Firebase';
 import { v4 } from 'uuid';
 
 function UpdatingBook() {

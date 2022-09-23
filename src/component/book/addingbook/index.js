@@ -1,8 +1,8 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useState, useContext } from "react";
-import { storageFirebase } from '../../config/Firebase';
+import { storageFirebase } from '../../../config/Firebase';
 import { v4 } from 'uuid';
-import { UserInformation } from '../../App';
+import { UserInformation } from '../../../App';
 
 function AddingBook() {
     const { userInformation } = useContext(UserInformation);

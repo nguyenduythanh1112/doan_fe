@@ -1,15 +1,10 @@
 import { useState, useContext } from "react";
 import { useParams } from "react-router";
-import { UserInformation } from '../../App';
+import { UserInformation } from '../../../App';
 function ShowingDetail() {
     const { userInformation, setUserInformation } = useContext(UserInformation);
     const { id } = useParams()
     const [book, setBook] = useState();
-    const [file, setFile] = useState({ image: "", file: "" })
-    const [selectedOption, setSelectedOption] = useState({
-        image: "text",
-        file: "text"
-    })
     const findBook = () => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", userInformation.accessToken);
