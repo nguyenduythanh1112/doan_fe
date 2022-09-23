@@ -57,6 +57,7 @@ function AddingBook() {
                 alert("success: " + data);
                 console.log(data)
             }
+            else alert("Make sure that every thing already has filled ")
             console.log(respond);
             setLoading(() => false);
             // resolve()
@@ -92,11 +93,8 @@ function AddingBook() {
     }
 
     const handleAddingBook = async () => {
-
         if (file.image && file.file) {
-
             setLoading(true);
-
             await uploadImage();
             await uploadFile();
             await fetchData();

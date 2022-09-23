@@ -11,6 +11,7 @@ import Footer from './component/footer';
 import UpdatingBook from './component/updatingbook';
 import { createContext, useState } from 'react';
 import { isExpired, decodeToken } from 'react-jwt';
+import ShowingDetail from './component/showingdetail';
 export const UserInformation = createContext();
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/addingbook" element={<AddingBook />} />
             <Route path="/updatingbook/:id" element={<UpdatingBook />}></Route>
+            <Route path="/showingdetail/:id" element={<ShowingDetail />}></Route>
           </Routes>
           <Footer></Footer>
         </BrowserRouter>

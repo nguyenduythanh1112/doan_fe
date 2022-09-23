@@ -71,7 +71,7 @@ function ShowingBook() {
                                         <Link to="/">Add to cart</Link>
                                     </div>
                                 }
-
+                                <Link to={`/showingdetail/${value.id}`}>Detail</Link>
                             </td>
                         </tr>
                     )
