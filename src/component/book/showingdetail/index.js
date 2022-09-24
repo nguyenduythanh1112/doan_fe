@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useParams } from "react-router";
 import { UserInformation } from '../../../App';
+import BookDetail from "./BookDetail";
 function ShowingDetail() {
     const { userInformation, setUserInformation } = useContext(UserInformation);
     const { id } = useParams()
@@ -33,7 +34,7 @@ function ShowingDetail() {
     }
     return (
         <div>
-            AddingBook
+            {/* AddingBook
             <input placeholder="title" value={book.title} onChange={(e) => setBook({ ...book, title: e.target.value })}></input>
             <input placeholder="summary" value={book.summary} onChange={e => setBook({ ...book, summary: e.target.value })}></input>
             <input placeholder="numberOfPage" value={book.numberOfPage} onChange={e => setBook({ ...book, numberOfPage: e.target.value })}></input>
@@ -47,7 +48,10 @@ function ShowingDetail() {
             <input placeholder="publisher" value={book.publisher} onChange={e => setBook({ ...book, publisher: e.target.value })}></input>
             <input placeholder="author" value={book.author} onChange={e => setBook({ ...book, author: e.target.value })}></input>
             <input placeholder="category" value={book.category} onChange={e => setBook({ ...book, category: e.target.value })}></input>
-            <button>Back</button>
+            <button>Back</button> */}
+
+            <BookDetail book={book}></BookDetail>
+
         </div >
     );
 }

@@ -14,20 +14,17 @@ import ShowingDetail from './component/book/showingdetail';
 export const UserInformation = createContext();
 
 function App() {
-
   const [userInformation, setUserInformation] = useState(() => {
-
     let accessToken = localStorage.getItem("bookstoretoken");
     accessToken = accessToken ? accessToken : "none";
     const payload = decodeToken(accessToken);
     return {
-      role: payload && payload.role ? payload.role : "user",
+      role: payload && payload.role && !isExpired(accessToken) ? payload.role : "user",
       isLogin: isExpired(accessToken) ? false : true,
       accessToken: accessToken ? accessToken : ""
     }
   });
   return (
-
     <UserInformation.Provider value={{ userInformation, setUserInformation }}>
       <div className="App">
         <BrowserRouter>
@@ -48,7 +45,6 @@ function App() {
         </BrowserRouter>
       </div >
     </UserInformation.Provider>
-
   );
 }
 

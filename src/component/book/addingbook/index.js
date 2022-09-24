@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { storageFirebase } from '../../../config/Firebase';
 import { v4 } from 'uuid';
 import { UserInformation } from '../../../App';
+import { Button, Input } from "@material-tailwind/react";
 
 function AddingBook() {
     const { userInformation } = useContext(UserInformation);
@@ -110,8 +111,7 @@ function AddingBook() {
 
     return (
         <div>
-            AddingBook
-            <input placeholder="title" value={book.title} onChange={(e) => setBook({ ...book, title: e.target.value })}></input>
+            {/* <input placeholder="title" value={book.title} onChange={(e) => setBook({ ...book, title: e.target.value })}></input>
             <input placeholder="summary" value={book.summary} onChange={e => setBook({ ...book, summary: e.target.value })}></input>
             <input placeholder="numberOfPage" value={book.numberOfPage} onChange={e => setBook({ ...book, numberOfPage: e.target.value })}></input>
             <input placeholder="language" value={book.language} onChange={e => setBook({ ...book, language: e.target.value })}></input>
@@ -124,7 +124,28 @@ function AddingBook() {
             <input placeholder="publisher" value={book.publisher} onChange={e => setBook({ ...book, publisher: e.target.value })}></input>
             <input placeholder="author" value={book.author} onChange={e => setBook({ ...book, author: e.target.value })}></input>
             <input placeholder="category" value={book.category} onChange={e => setBook({ ...book, category: e.target.value })}></input>
-            <button onClick={handleAddingBook}>Add Book</button>
+            <button onClick={handleAddingBook}>Add Book</button> */}
+
+
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="title" value={book.title} onChange={(e) => setBook({ ...book, title: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="summary" value={book.summary} onChange={e => setBook({ ...book, summary: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="numberOfPage" value={book.numberOfPage} onChange={e => setBook({ ...book, numberOfPage: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="language" value={book.language} onChange={e => setBook({ ...book, language: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto">
+                <label>Input Image: </label>
+                <input type="file" placeholder="image" onChange={e => setFile({ ...file, image: e.target.files[0] })}></input>
+                <label>Input File: </label>
+                <input type="file" placeholder="file" onChange={e => setFile({ ...file, file: e.target.files[0] })}></input>
+            </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="description" value={book.description} onChange={e => setBook({ ...book, description: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input type="number" label="importedPrice" value={book.importedPrice} onChange={e => setBook({ ...book, importedPrice: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input type="number" label="importedQuantity" value={book.importedQuantity} onChange={e => setBook({ ...book, importedQuantity: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input type="number" label="exportedQuantity" value={book.exportedQuantity} onChange={e => setBook({ ...book, exportedQuantity: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="publisher" value={book.publisher} onChange={e => setBook({ ...book, publisher: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="author" value={book.author} onChange={e => setBook({ ...book, author: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="category" value={book.category} onChange={e => setBook({ ...book, category: e.target.value })} /> </div>
+            <Button onClick={handleAddingBook}>Add Book</Button>
+
         </div >
     );
 }

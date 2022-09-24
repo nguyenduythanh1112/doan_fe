@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { UserInformation } from '../../App';
 import { decodeToken } from 'react-jwt';
+import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Input, Typography } from '@material-tailwind/react';
 
 function Login() {
 
@@ -49,11 +50,44 @@ function Login() {
     }
 
     return (
-        <div>
-            <input placeholder="Username" onChange={e => setUser({ ...user, username: e.target.value })} value={user.username}></input>
+        <div className='flex  justify-center mt-10'>
+            {/* <input placeholder="Username" onChange={e => setUser({ ...user, username: e.target.value })} value={user.username}></input>
             <input placeholder="Password" onChange={e => setUser({ ...user, password: e.target.value })} value={user.password}></input>
             <button onClick={handleLogin}>Login</button>
-            <button onClick={handleInformation}>Set navigation</button>
+            <button onClick={handleInformation}>Set navigation</button> */}
+            <Card className="w-96">
+                <CardHeader
+                    variant="gradient"
+                    color="blue"
+                    className="mb-4 grid h-28 place-items-center"
+                >
+                    <Typography variant="h3" color="white">
+                        Sign In
+                    </Typography>
+                </CardHeader>
+                <CardBody className="flex flex-col gap-4">
+                    <Input label="Username" size="lg" onChange={e => setUser({ ...user, username: e.target.value })} value={user.username} />
+                    <Input label="Password" size="lg" onChange={e => setUser({ ...user, password: e.target.value })} value={user.password} />
+                    <div className="-ml-2.5"><Checkbox label="Remember Me" /></div>
+                </CardBody>
+                <CardFooter className="pt-0">
+                    <Button variant="gradient" fullWidth onClick={handleLogin}>
+                        Sign In
+                    </Button>
+                    <Typography variant="small" className="mt-6 flex justify-center">
+                        Don't have an account?
+                        <Typography
+                            as="a"
+                            href="#signup"
+                            variant="small"
+                            color="blue"
+                            className="ml-1 font-bold"
+                        >
+                            Sign up
+                        </Typography>
+                    </Typography>
+                </CardFooter>
+            </Card>
         </div>
     );
 }

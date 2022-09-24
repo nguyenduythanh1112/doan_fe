@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react"
 import { Link } from "react-router-dom";
 import { UserInformation } from '../../../App';
+import BookTable from "./BookTable";
 
 function ShowingBook() {
 
@@ -40,45 +41,13 @@ function ShowingBook() {
         <div>
             ShowingBook
             <Link to="/addingbook">Add book</Link>
-            <table>
-                <tr>
-                    <th>Image</th>
-                    <th>Tile</th>
-                    <th>Summary</th>
-                    <th>Description</th>
-                    <th>Author</th>
-                    <th>Action</th>
-                </tr>
-                {bookList.map((value, index) => {
-                    return (
-                        <tr>
-                            <td>
-                                <img src={value.image}></img>
-                            </td>
-                            <td>{value.title}</td>
-                            <td>{value.summary}</td>
-                            <td>{value.description}</td>
-                            <td>{value.author}</td>
-                            <td>
-                                {userInformation.role != "user"
-                                    ?
-                                    <div>
-                                        <Link to={`/updatingbook/${value.id}`}>Update</Link>
-                                        <Link to="/">Delete</Link>
-                                    </div>
-                                    :
-                                    <div>
-                                        <Link to="/">Add to cart</Link>
-                                    </div>
-                                }
-                                <Link to={`/showingdetail/${value.id}`}>Detail</Link>
-                            </td>
-                        </tr>
-                    )
-                })}
-            </table>
+            <BookTable books={bookList}></BookTable>
         </div >
     );
 }
 
 export default ShowingBook;
+
+
+
+
