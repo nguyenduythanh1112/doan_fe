@@ -4,6 +4,7 @@ import { UserInformation } from '../../../App';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storageFirebase } from '../../../config/Firebase';
 import { v4 } from 'uuid';
+import { Button, Input } from "@material-tailwind/react";
 
 function UpdatingBook() {
 
@@ -110,8 +111,7 @@ function UpdatingBook() {
     }
     return (
         <div>
-            AddingBook
-            <input placeholder="title" value={book.title} onChange={(e) => setBook({ ...book, title: e.target.value })}></input>
+            {/* <input placeholder="title" value={book.title} onChange={(e) => setBook({ ...book, title: e.target.value })}></input>
             <input placeholder="summary" value={book.summary} onChange={e => setBook({ ...book, summary: e.target.value })}></input>
             <input placeholder="numberOfPage" value={book.numberOfPage} onChange={e => setBook({ ...book, numberOfPage: e.target.value })}></input>
             <input placeholder="language" value={book.language} onChange={e => setBook({ ...book, language: e.target.value })}></input>
@@ -147,7 +147,48 @@ function UpdatingBook() {
             <input placeholder="author" value={book.author} onChange={e => setBook({ ...book, author: e.target.value })}></input>
             <input placeholder="category" value={book.category} onChange={e => setBook({ ...book, category: e.target.value })}></input>
             <button onClick={handleUpdating}>Save</button>
-            <button onClick={() => setBook(undefined)}>Refresh</button>
+            <button onClick={() => setBook(undefined)}>Refresh</button> */}
+
+
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="title" value={book.title} onChange={(e) => setBook({ ...book, title: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="summary" value={book.summary} onChange={e => setBook({ ...book, summary: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="numberOfPage" value={book.numberOfPage} onChange={e => setBook({ ...book, numberOfPage: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="language" value={book.language} onChange={e => setBook({ ...book, language: e.target.value })} /> </div>
+            {selectedOption.image === "text"
+                ?
+                <div className="w-4/5 my-2 capitalize flex m-auto">
+                    <Input label="image" value={book.image} onChange={(e) => setBook({ ...book, image: e.target.value })} ></Input>
+                    <Button onClick={() => setSelectedOption({ ...selectedOption, image: "file" })} className="m-1">File</Button>
+                </div>
+                :
+                <div className="w-4/5 my-2 capitalize flex m-auto">
+                    <input type="file" placeholder="image" onChange={e => setFile({ ...file, image: e.target.files[0] })}></input>
+                    <Button onClick={() => setSelectedOption({ ...selectedOption, image: "text" })} className="m-1">URL</Button>
+                </div>
+            }
+            {selectedOption.file === "text"
+                ?
+                <div className="w-4/5 my-2 capitalize flex m-auto">
+                    <Input label="file" value={book.file} onChange={(e) => setBook({ ...book, file: e.target.value })}></Input>
+                    <Button onClick={() => setSelectedOption({ ...selectedOption, file: "file" })} className="m-1">FILE</Button>
+                </div>
+                :
+                <div className="w-4/5 my-2 capitalize flex m-auto">
+                    <input type="file" placeholder="file" onChange={e => setFile({ ...file, file: e.target.files[0] })}></input>
+                    <Button onClick={() => setSelectedOption({ ...selectedOption, file: "text" })} className="m-1">URL</Button>
+                </div>
+            }
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="description" value={book.description} onChange={e => setBook({ ...book, description: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input type="number" label="importedPrice" value={book.importedPrice} onChange={e => setBook({ ...book, importedPrice: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input type="number" label="importedQuantity" value={book.importedQuantity} onChange={e => setBook({ ...book, importedQuantity: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input type="number" label="exportedQuantity" value={book.exportedQuantity} onChange={e => setBook({ ...book, exportedQuantity: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="publisher" value={book.publisher} onChange={e => setBook({ ...book, publisher: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="author" value={book.author} onChange={e => setBook({ ...book, author: e.target.value })} /> </div>
+            <div className="w-4/5 my-2 capitalize flex m-auto"> <Input label="category" value={book.category} onChange={e => setBook({ ...book, category: e.target.value })} /> </div>
+            <div className="flex justify-around">
+                <Button onClick={handleUpdating}>Update Book</Button>
+                <Button onClick={() => setBook(undefined)}>Refresh</Button>
+            </div>
         </div >
     );
 }

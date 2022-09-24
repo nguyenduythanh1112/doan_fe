@@ -39,8 +39,7 @@ function ShowingBook() {
 
     return (
         <div>
-            ShowingBook
-            <Link to="/addingbook">Add book</Link>
+            {/* <Link to="/addingbook">Add book</Link> */}
             <BookTable books={bookList}></BookTable>
         </div >
     );
