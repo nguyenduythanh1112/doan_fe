@@ -1,12 +1,17 @@
 import { Table, Button, Dropdown } from 'flowbite-react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-function BookTable({ books }) {
+
+
+function BookItemTable({ books }) {
     const header = ["image", "tile", "summary", "author", "Action"];
-    if (!books) {
-        return <div>Loading</div>
-    }
+
+    useEffect(() => {
+
+    })
+
     return (
-        <div className='p-16'>
+        <div className='p-8'>
 
             <div className="my-8">
                 <Button gradientDuoTone="tealToLime">
@@ -64,4 +69,4 @@ function BookTable({ books }) {
     );
 }
 
-export default BookTable;
+export default BookItemTable;

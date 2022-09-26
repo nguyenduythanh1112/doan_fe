@@ -11,6 +11,9 @@ import UpdatingBook from './component/book/updatingbook';
 import { createContext, useState } from 'react';
 import { isExpired, decodeToken } from 'react-jwt';
 import ShowingDetail from './component/book/showingdetail';
+import DeletingBook from './component/book/deletingbook';
+import AddingBookItem from './component/bookitem/adddingbookitem';
+import Book from './component/book';
 export const UserInformation = createContext();
 
 function App() {
@@ -39,6 +42,10 @@ function App() {
             <Route path="/addingbook" element={<AddingBook />} />
             <Route path="/updatingbook/:id" element={<UpdatingBook />}></Route>
             <Route path="/showingdetail/:id" element={<ShowingDetail />}></Route>
+            <Route path="/deletingbook/:id" element={<DeletingBook />}></Route>
+
+            <Route path="/addingbookitem" element={<AddingBookItem />} />
+            <Route path="/book" element={<Book />} />
 
           </Routes>
           <Footer></Footer>

@@ -2,9 +2,10 @@ import { useState, useContext } from "react";
 import { useParams } from "react-router";
 import { UserInformation } from '../../../App';
 import BookDetail from "./BookDetail";
-function ShowingDetail() {
-    const { userInformation, setUserInformation } = useContext(UserInformation);
-    const { id } = useParams()
+function ShowingDetail({ idBook }) {
+    const { userInformation } = useContext(UserInformation);
+    let { id } = useParams();
+    if (idBook) id = idBook;
     const [book, setBook] = useState();
     const findBook = () => {
         var myHeaders = new Headers();
