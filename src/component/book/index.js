@@ -146,7 +146,7 @@ const Book = () => {
     }
 
     const imageBodyTemplate = (rowData) => {
-        return <img src={rowData.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={rowData.image} className="product-image" />
+        return <img src={rowData.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={rowData.image} className="product-image h-12 w-auto" />
     }
 
     const actionBodyTemplate = (rowData) => {
@@ -181,7 +181,7 @@ const Book = () => {
     );
 
     return (
-        <div className="datatable-crud-demo capitalize">
+        <div className="datatable-crud-demo capitalize m-3">
             <Toast ref={toast} />
             <div className="card">
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
@@ -196,21 +196,21 @@ const Book = () => {
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                     globalFilter={globalFilter} header={header} responsiveLayout="scroll">
 
-                    <Column header="action" body={actionBodyTemplate} exportable={false} ></Column>
-                    <Column field="id" header="id" sortable ></Column>
-                    <Column field="image" header="image" sortable body={imageBodyTemplate}></Column>
-                    <Column field="summary" header="summary" sortable ></Column>
-                    <Column field="title" header="title" sortable ></Column>
+                    <Column header="action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '9rem' }} ></Column>
+                    <Column field="id" header="id" sortable style={{ minWidth: '9rem' }}></Column>
+                    <Column field="image" header="image" sortable body={imageBodyTemplate} style={{ minWidth: '9rem' }}></Column>
+                    <Column field="summary" header="summary" sortable style={{ minWidth: '25rem' }}></Column>
+                    <Column field="title" header="title" sortable style={{ minWidth: '9rem' }}></Column>
                     <Column field="numberOfPage" header="numberOfPage" sortable ></Column>
                     <Column field="language" header="language" sortable ></Column>
-                    {/* <Column field="file" header="file" sortable ></Column> */}
-                    <Column field="description" header="description" sortable ></Column>
+                    {/* <Column field="file" header="file" sortable style={{ minWidth: '9rem' }}></Column> */}
+                    <Column field="description" header="description" sortable style={{ minWidth: '25rem' }}></Column>
                     <Column field="importedPrice" header="importedPrice" sortable ></Column>
-                    <Column field="importedQuantity" header="importedQuantity" sortable ></Column>
+                    <Column field="importedQuantity" header="importedQuantity" sortable></Column>
                     <Column field="exportedQuantity" header="exportedQuantity" sortable ></Column>
-                    <Column field="publisher" header="publisher" sortable ></Column>
-                    <Column field="author" header="author" sortable ></Column>
-                    <Column field="category" header="category" sortable ></Column>
+                    <Column field="publisher" header="publisher" sortable style={{ minWidth: '9rem' }}></Column>
+                    <Column field="author" header="author" sortable style={{ minWidth: '9rem' }}></Column>
+                    <Column field="category" header="category" sortable style={{ minWidth: '9rem' }} ></Column>
 
                 </DataTable>
             </div>

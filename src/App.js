@@ -12,10 +12,8 @@ import { createContext, useState } from 'react';
 import { isExpired, decodeToken } from 'react-jwt';
 import ShowingDetail from './component/book/showingdetail';
 import DeletingBook from './component/book/deletingbook';
-import AddingBookItem from './component/bookitem/adddingbookitem';
 import Book from './component/book';
-import UserBookItem from './component/bookitem/userbookitem';
-import AdminBookItem from './component/bookitem/adminbookitem';
+import BookItem from './component/bookitem';
 export const UserInformation = createContext();
 
 function App() {
@@ -47,9 +45,7 @@ function App() {
             <Route path="/deletingbook/:id" element={<DeletingBook />}></Route>
             <Route path="/book" element={<Book />} />
 
-            <Route path="/addingbookitem" element={<AddingBookItem />} />
-            <Route path="/userbookitem" element={<UserBookItem />} />
-            <Route path="/adminbookitem" element={<AdminBookItem />} />
+            <Route path="/bookitem" element={<BookItem />} />
 
           </Routes>
           <Footer></Footer>
@@ -58,5 +54,4 @@ function App() {
     </UserInformation.Provider>
   );
 }
-
 export default App;

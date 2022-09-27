@@ -152,7 +152,7 @@ const UserBookItem = () => {
 
     const renderGridItem = (bookItem) => {
         return (
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-3">
                 <div className="product-grid-item card">
                     <div className="product-grid-item-top">
                         <div>
@@ -166,7 +166,7 @@ const UserBookItem = () => {
                         <div className="product-description">{bookItem.bookModel.description}</div>
                         <div className="product-price my-3">Price: {bookItem.exportedPrice}</div>
                     </div>
-                    <div className="product-grid-item-bottom">
+                    <div className="product-grid-item-bottom ">
                         <Button icon="pi pi-shopping-cart" label="Add to Cart"></Button>
                         <Button label="More" className="p-button-outlined p-button-info"></Button>
                     </div>
@@ -202,7 +202,7 @@ const UserBookItem = () => {
     const header = renderHeader();
 
     return (
-        <div className="dataview-demo m-3">
+        <div className="dataview-demo">
             <div className="card">
                 <DataView value={products} layout={layout} header={header}
                     itemTemplate={itemTemplate} paginator rows={9}

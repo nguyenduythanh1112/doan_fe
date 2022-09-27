@@ -2,41 +2,61 @@ import { Link } from 'react-router-dom';
 import { UserInformation } from '../../App';
 import { useContext } from 'react';
 import { Menubar } from 'primereact/menubar';
-import { InputText } from 'primereact/inputtext';
 
 function AdminNavigation() {
-    const { userInformation, setUserInformation } = useContext(UserInformation);
+    const { userInformation } = useContext(UserInformation);
 
     const items = [
         {
-            label: 'Quit',
-            icon: 'pi pi-fw pi-power-off',
-            children: <Link to="/showingbook">Book===</Link>
+            label: <Link to="/">Admin Home</Link>,
+            icon: 'pi pi-home',
         },
         {
-            label: 'Quit',
-            icon: 'pi pi-fw pi-power-off',
+            label: <Link to="/book">Book</Link>,
+            icon: 'pi pi-book',
+        },
+        {
+            label: <Link to="/bookitem">Book Item</Link>,
+            icon: 'pi pi-table',
+        },
+        {
+            label: <Link to="/adminorder">Order</Link>,
+            icon: 'pi pi-calculator',
+        },
+        {
+            label: <Link to="/admincart">Cart</Link>,
+            icon: 'pi pi-shopping-cart',
         },
 
     ];
 
-    const start = <img alt="logo" src="showcase/images/logo.png" onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} height="40" className="mr-2"></img>;
-    const end = <InputText placeholder="Search" type="text" />;
-    return (
-        <div>
-            AdminNavigation
-            <Link to="/showingbook">Book===</Link>
-            <Link to="/addingbookitem">AddingBookItem===</Link>
+    if (!userInformation.isLogin) {
+        items.push(
             {
-                userInformation.isLogin === false
-                    ? <Link to="/login">Login</Link>
-                    : <Link to="/logout">Logout</Link>
+                label: <Link to="/login">Login</Link>,
+                icon: 'pi pi-user',
+            },
+            {
+                label: <Link to="/register">Register</Link>,
+                icon: 'pi pi-user',
+            },
+        )
+    }
+    else {
+        items.push(
+            {
+                label: <Link to="/">User</Link>,
+                icon: 'pi pi-user',
+            },
+            {
+                label: <Link to="/logout">Logout</Link>,
+                icon: 'pi pi-fw pi-power-off',
             }
-            <div>
-                <div className="card">
-                    <Menubar model={items} start={start} end={end} />
-                </div>
-            </div>
+        )
+    }
+    return (
+        <div className="card">
+            <Menubar model={items} />
         </div>
     );
 }

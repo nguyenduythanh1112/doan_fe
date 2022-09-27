@@ -5,12 +5,6 @@ import { UserInformation } from '../../App';
 
 function Header() {
     const { userInformation } = useContext(UserInformation);
-    console.log(userInformation)
-    return (
-        <div>
-            {userInformation.role === "user" ? <UserNavigation /> : <AdminNavigation />}
-        </div >
-    );
+    return (<div>{userInformation.role === "user" ? <UserNavigation /> : <AdminNavigation />}</div>);
 }
-
 export default Header;

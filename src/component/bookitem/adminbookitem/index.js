@@ -289,7 +289,7 @@ const AdminBookItem = () => {
     );
 
     return (
-        <div className="datatable-crud-demo capitalize m-3">
+        <div className="datatable-crud-demo capitalize">
             <Toast ref={toast} />
             <div className="card">
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
