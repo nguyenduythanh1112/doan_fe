@@ -15,6 +15,7 @@ import DeletingBook from './component/book/deletingbook';
 import AddingBookItem from './component/bookitem/adddingbookitem';
 import Book from './component/book';
 import UserBookItem from './component/bookitem/userbookitem';
+import AdminBookItem from './component/bookitem/adminbookitem';
 export const UserInformation = createContext();
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
 
             <Route path="/addingbookitem" element={<AddingBookItem />} />
             <Route path="/userbookitem" element={<UserBookItem />} />
+            <Route path="/adminbookitem" element={<AdminBookItem />} />
 
           </Routes>
           <Footer></Footer>
