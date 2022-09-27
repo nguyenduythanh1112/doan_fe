@@ -2,29 +2,23 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
-import '../../index.css';
-import ReactDOM from 'react-dom';
-
 import React, { useState, useEffect, useRef } from 'react';
-import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FileUpload } from 'primereact/fileupload';
-import { Rating } from 'primereact/rating';
 import { Toolbar } from 'primereact/toolbar';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton } from 'primereact/radiobutton';
-import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import './DataTableDemo.css';
+import * as BookService from '../../service/BookService';
+import * as FirebaseService from '../../service/FirebaseService';
+import './index.css';
 
 const Book = () => {
 
     let emptyProduct = {
-        id: 1,
+        id: null,
         title: "title",
         summary: "summary",
         numberOfPage: "200",
@@ -40,62 +34,41 @@ const Book = () => {
         category: "category",
     };
 
-    const [products, setProducts] = useState(null);
-    const [productDialog, setProductDialog] = useState(false);
-    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-    const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-    const [product, setProduct] = useState(emptyProduct);
-    const [selectedProducts, setSelectedProducts] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
-    const [globalFilter, setGlobalFilter] = useState(null);
-    const toast = useRef(null);
-    const dt = useRef(null);
+    let [products, setProducts] = useState(null);
+    let [productDialog, setProductDialog] = useState(false);
+    let [deleteProductDialog, setDeleteProductDialog] = useState(false);
+    let [product, setProduct] = useState(emptyProduct);
+    let [selectedProducts, setSelectedProducts] = useState(null);
+    let [globalFilter, setGlobalFilter] = useState(null);
+    let [selectedOption, setSelectedOption] = useState({
+        image: "text",
+        file: "text"
+    })
+    let [file, setFile] = useState({ image: "", file: "" })
+    let toast = useRef(null);
+    let dt = useRef(null);
 
     useEffect(() => {
-        setProducts([
-            {
-                id: 1,
-                title: "title",
-                summary: "summary",
-                numberOfPage: "200",
-                language: "language",
-                image: "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                file: "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                description: "description",
-                importedPrice: "10",
-                importedQuantity: "10",
-                exportedQuantity: "1",
-                publisher: "publisher",
-                author: "author",
-                category: "category",
-            },
-            {
-                id: 2,
-                title: "title",
-                summary: "summary",
-                numberOfPage: "200",
-                language: "language",
-                image: "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                file: "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                description: "description",
-                importedPrice: "10",
-                importedQuantity: "10",
-                exportedQuantity: "1",
-                publisher: "publisher",
-                author: "author",
-                category: "category",
-            }
-        ]);
+
+        BookService.findAll().then(response => {
+            return new Promise((resolve, reject) => {
+                if (response.ok) resolve(response.text());
+                reject();
+            })
+        }).then(result => {
+            setProducts(JSON.parse(result))
+        }).catch(error => {
+            alert("error");
+        });
+
     }, []);
 
     const openNew = () => {
         setProduct(emptyProduct);
-        setSubmitted(false);
         setProductDialog(true);
     }
 
     const hideDialog = () => {
-        setSubmitted(false);
         setProductDialog(false);
     }
 
@@ -103,11 +76,28 @@ const Book = () => {
         setDeleteProductDialog(false);
     }
 
-    const hideDeleteProductsDialog = () => {
-        setDeleteProductsDialog(false);
-    }
 
-    const saveProduct = () => {
+    const saveProduct = async () => {
+        if (selectedOption.image === "file" && file.image) {
+            const urlImage = await FirebaseService.uploadImage(file.image);
+            console.log(urlImage);
+            product = { ...product, image: urlImage };
+        }
+        if (selectedOption.file === "file" && file.file) {
+            const urlFile = await FirebaseService.uploadFile(file.file);
+            console.log(urlFile);
+            product = { ...product, file: urlFile };
+        }
+        const respond = await BookService.save(product);
+
+        if (respond.ok) {
+            const data = await respond.text();
+            setProducts([...products, JSON.parse(data)]);
+            alert("OK")
+        }
+        else {
+            alert("NO")
+        }
 
     }
 
@@ -131,19 +121,6 @@ const Book = () => {
 
     const exportCSV = () => { dt.current.exportCSV(); }
 
-    const confirmDeleteSelected = () => {
-        setDeleteProductsDialog(true);
-    }
-
-    const deleteSelectedProducts = () => {
-        let _products = products.filter(val => !selectedProducts.includes(val));
-        setProducts(_products);
-        setDeleteProductsDialog(false);
-        setSelectedProducts(null);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-    }
-
-
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
         let _product = { ...product };
@@ -151,19 +128,10 @@ const Book = () => {
         setProduct(_product);
     }
 
-    const onInputNumberChange = (e, name) => {
-        const val = e.value || 0;
-        let _product = { ...product };
-        _product[`${name}`] = val;
-
-        setProduct(_product);
-    }
-
     const leftToolbarTemplate = () => {
         return (
             <React.Fragment>
                 <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
-                <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </React.Fragment>
         )
     }
@@ -211,19 +179,14 @@ const Book = () => {
             <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={deleteProduct} />
         </React.Fragment>
     );
-    const deleteProductsDialogFooter = (
-        <React.Fragment>
-            <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteProductsDialog} />
-            <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={deleteSelectedProducts} />
-        </React.Fragment>
-    );
 
     return (
-        <div className="datatable-crud-demo">
+        <div className="datatable-crud-demo capitalize">
             <Toast ref={toast} />
             <div className="card">
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
                 <DataTable
+                    className='capitalize'
                     ref={dt}
                     value={products}
                     selection={selectedProducts}
@@ -233,49 +196,69 @@ const Book = () => {
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                     globalFilter={globalFilter} header={header} responsiveLayout="scroll">
 
-                    <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>
-                    <Column field="id" header="id" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="summary" header="summary" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="title" header="title" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="numberOfPage" header="numberOfPage" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="language" header="language" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="image" header="image" sortable style={{ minWidth: '12rem' }} body={imageBodyTemplate}></Column>
-                    <Column field="file" header="file" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="description" header="description" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="importedPrice" header="importedPrice" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="importedQuantity" header="importedQuantity" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="exportedQuantity" header="exportedQuantity" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="publisher" header="publisher" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="author" header="author" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="category" header="category" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
+                    <Column header="action" body={actionBodyTemplate} exportable={false} ></Column>
+                    <Column field="id" header="id" sortable ></Column>
+                    <Column field="image" header="image" sortable body={imageBodyTemplate}></Column>
+                    <Column field="summary" header="summary" sortable ></Column>
+                    <Column field="title" header="title" sortable ></Column>
+                    <Column field="numberOfPage" header="numberOfPage" sortable ></Column>
+                    <Column field="language" header="language" sortable ></Column>
+                    {/* <Column field="file" header="file" sortable ></Column> */}
+                    <Column field="description" header="description" sortable ></Column>
+                    <Column field="importedPrice" header="importedPrice" sortable ></Column>
+                    <Column field="importedQuantity" header="importedQuantity" sortable ></Column>
+                    <Column field="exportedQuantity" header="exportedQuantity" sortable ></Column>
+                    <Column field="publisher" header="publisher" sortable ></Column>
+                    <Column field="author" header="author" sortable ></Column>
+                    <Column field="category" header="category" sortable ></Column>
 
                 </DataTable>
             </div>
 
-            <Dialog visible={productDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                <div className="field">
-                    <label>Name</label>
-                    <InputText value={product.name} onChange={(e) => onInputChange(e, 'name')} required />
-                </div>
-                <div className="field">
-                    <label>Description</label>
-                    <InputTextarea value={product.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label>Category</label>
-                    <InputText value={product.name} onChange={(e) => onInputChange(e, 'name')} required />
-                </div>
-                <div className="field">
-                    <label htmlFor="quantity">Quantity</label>
-                    <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
-                </div>
+            <Dialog visible={productDialog} style={{ width: '650px' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+                <div className="field"><label>title</label><InputText value={product.title} onChange={(e) => onInputChange(e, 'title')} required /></div>
+                <div className="field"><label>summary</label><InputText value={product.summary} onChange={(e) => onInputChange(e, 'summary')} required /></div>
+                <div className="field"><label>numberOfPage</label><InputText value={product.numberOfPage} onChange={(e) => onInputChange(e, 'numberOfPage')} required /></div>
+                <div className="field"><label>language</label><InputText value={product.language} onChange={(e) => onInputChange(e, 'language')} required /></div>
+
+                {selectedOption.image === "text"
+                    ?
+                    <div className='flex'>
+                        <InputText placeholder="image" value={product.image} onChange={(e) => setProduct({ ...product, image: e.target.value })}></InputText>
+                        <Button className='w-3 p-button-raised p-button-text' onClick={() => setSelectedOption({ ...selectedOption, image: "file" })}>Or file</Button>
+                    </div>
+                    :
+                    <div className='flex'>
+                        <input type="file" placeholder="image" onChange={e => setFile({ ...file, image: e.target.files[0] })}></input>
+                        <Button className='w-3 p-button-raised p-button-text' onClick={() => setSelectedOption({ ...selectedOption, image: "text" })}>Or text</Button>
+                    </div>
+                }
+                {selectedOption.file === "text"
+                    ?
+                    <div className='flex'>
+                        <InputText placeholder="file" value={product.file} onChange={(e) => setProduct({ ...product, file: e.target.value })}></InputText>
+                        <Button className='w-3 p-button-raised p-button-text' onClick={() => setSelectedOption({ ...selectedOption, file: "file" })}>Choose file</Button>
+                    </div >
+                    :
+                    <div className='flex'>
+                        <input type="file" placeholder="file" onChange={e => setFile({ ...file, file: e.target.files[0] })}></input>
+                        <Button className='w-3 p-button-raised p-button-text' onClick={() => setSelectedOption({ ...selectedOption, file: "text" })}>Enter text</Button>
+                    </div>
+                }
+                {/* 
+
+                <div className="field"><label>image</label><InputText value={product.image} onChange={(e) => onInputChange(e, 'image')} required /></div>
+                <div className="field"><label>file</label><InputText value={product.file} onChange={(e) => onInputChange(e, 'file')} required /></div>
+                <div className="field"><label>image</label><FileUpload accept="image/*" emptyTemplate={<p className="m-0">UPLOAD</p>} /></div>
+                <div className="field"><label>file</label><FileUpload accept="image/*" emptyTemplate={<p className="m-0">UPLOAD</p>} /></div> */}
+                <div className="field"><label>description</label><InputText value={product.description} onChange={(e) => onInputChange(e, 'description')} required /></div>
+                <div className="field"><label>importedPrice</label><InputText value={product.importedPrice} onChange={(e) => onInputChange(e, 'importedPrice')} required /></div>
+                <div className="field"><label>importedQuantity</label><InputText value={product.importedQuantity} onChange={(e) => onInputChange(e, 'importedQuantity')} required /></div>
+                <div className="field"><label>exportedQuantity</label><InputText value={product.exportedQuantity} onChange={(e) => onInputChange(e, 'exportedQuantity')} required /></div>
+                <div className="field"><label>publisher</label><InputText value={product.publisher} onChange={(e) => onInputChange(e, 'publisher')} required /></div>
+                <div className="field"><label>author</label><InputText value={product.author} onChange={(e) => onInputChange(e, 'author')} required /></div>
+                <div className="field"><label>category</label><InputText value={product.category} onChange={(e) => onInputChange(e, 'category')} required /></div>
             </Dialog>
-
-
-
-
-
 
             <Dialog
                 visible={deleteProductDialog}
@@ -288,18 +271,6 @@ const Book = () => {
                     {product && <span>Are you sure you want to delete <b>{product.name}</b>?</span>}
                 </div>
             </Dialog>
-
-
-
-
-            <Dialog visible={deleteProductsDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
-                <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && <span>Are you sure you want to delete the selected products?</span>}
-                </div>
-            </Dialog>
-
-
 
         </div>
     );
