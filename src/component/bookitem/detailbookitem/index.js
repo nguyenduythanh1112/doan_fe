@@ -1,13 +1,17 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import { Panel } from 'primereact/panel';
 import { Button } from 'primereact/button';
 import { UserInformation } from '../../../App';
+import * as BookItemService from '../../../service/BookItemService';
+import { toast } from 'react-toastify';
 
 function DetailBookItem() {
 
     const { id } = useParams();
     const { userInformation } = useContext(UserInformation);
+
+
 
     const [bookItem, setBookItem] = useState({
         "id": 8,
@@ -33,13 +37,28 @@ function DetailBookItem() {
         }
     })
 
+
+    useEffect(() => {
+        BookItemService.findById(id).then(response => {
+            return new Promise((resolve, reject) => {
+                if (response.ok) resolve(response.text());
+                reject();
+            })
+        }).then(result => {
+            setBookItem(JSON.parse(result));
+            toast.success("Load book item success")
+        }).catch(error => {
+            toast.error("Load book item error")
+        });
+    }, [])
+
     return (
         <div className="grid m-3 justify-center">
             <div className="col-4">
                 Book Item ID: {id}
                 <img src={bookItem.bookModel.image} className="w-full"></img>
                 <Panel className="my-2" header="exportedPrice" toggleable><p>{bookItem.exportedPrice}</p></Panel>
-                {userInformation.role !== 'user' && <Button icon="pi pi-shopping-cart" label="Add to Cart" className="w-full"></Button>}
+                {userInformation.role === 'user' && <Button icon="pi pi-shopping-cart" label="Add to Cart" className="w-full"></Button>}
                 <Panel className="my-2" header="Title" toggleable><p>{bookItem.bookModel.title}</p></Panel>
                 <Panel className="my-2" header="barcode" toggleable><p>{bookItem.barcode}</p></Panel>
             </div>

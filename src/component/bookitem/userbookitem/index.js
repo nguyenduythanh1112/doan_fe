@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
-import { Rating } from 'primereact/rating';
+import { toast } from 'react-toastify';
+import * as BookItemService from '../../../service/BookItemService';
 import './index.css';
 import { Link } from 'react-router-dom';
 
@@ -19,100 +20,113 @@ const UserBookItem = () => {
 
 
     useEffect(() => {
-        setProducts([
-            {
-                "id": 7,
-                "barcode": "NDT147258369",
-                "exportedPrice": 888.0,
-                "discount": 0.25,
-                "status": "yes",
-                "bookModel": {
-                    "id": 45,
-                    "title": "title",
-                    "summary": "summary",
-                    "numberOfPage": 200,
-                    "language": "language",
-                    "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                    "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
-                    "description": "description",
-                    "importedPrice": 10.0,
-                    "importedQuantity": 10,
-                    "exportedQuantity": 1,
-                    "publisher": "publisher",
-                    "author": "author",
-                    "category": "category"
-                }
-            },
-            {
-                "id": 7,
-                "barcode": "NDT147258369",
-                "exportedPrice": 888.0,
-                "discount": 0.25,
-                "status": "yes",
-                "bookModel": {
-                    "id": 45,
-                    "title": "title",
-                    "summary": "summary",
-                    "numberOfPage": 200,
-                    "language": "language",
-                    "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                    "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
-                    "description": "description",
-                    "importedPrice": 10.0,
-                    "importedQuantity": 10,
-                    "exportedQuantity": 1,
-                    "publisher": "publisher",
-                    "author": "author",
-                    "category": "category"
-                }
-            },
-            {
-                "id": 7,
-                "barcode": "NDT147258369",
-                "exportedPrice": 888.0,
-                "discount": 0.25,
-                "status": "yes",
-                "bookModel": {
-                    "id": 45,
-                    "title": "title",
-                    "summary": "summary",
-                    "numberOfPage": 200,
-                    "language": "language",
-                    "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                    "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
-                    "description": "description",
-                    "importedPrice": 10.0,
-                    "importedQuantity": 10,
-                    "exportedQuantity": 1,
-                    "publisher": "publisher",
-                    "author": "author",
-                    "category": "category"
-                }
-            },
-            {
-                "id": 8,
-                "barcode": "NDT147258369",
-                "exportedPrice": 888.0,
-                "discount": 0.25,
-                "status": "yes",
-                "bookModel": {
-                    "id": 46,
-                    "title": "title",
-                    "summary": "summary",
-                    "numberOfPage": 200,
-                    "language": "language",
-                    "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                    "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpga7663d04-fa69-43dc-882d-51acdd7c05ff?alt=media&token=8119e870-13e3-44b6-bff8-646789fb65c1",
-                    "description": "description",
-                    "importedPrice": 10.0,
-                    "importedQuantity": 10,
-                    "exportedQuantity": 1,
-                    "publisher": "publisher",
-                    "author": "author",
-                    "category": "category"
-                }
-            }
-        ]);
+
+        // setProducts([
+        //     {
+        //         "id": 7,
+        //         "barcode": "NDT147258369",
+        //         "exportedPrice": 888.0,
+        //         "discount": 0.25,
+        //         "status": "yes",
+        //         "bookModel": {
+        //             "id": 45,
+        //             "title": "title",
+        //             "summary": "summary",
+        //             "numberOfPage": 200,
+        //             "language": "language",
+        //             "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
+        //             "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
+        //             "description": "description",
+        //             "importedPrice": 10.0,
+        //             "importedQuantity": 10,
+        //             "exportedQuantity": 1,
+        //             "publisher": "publisher",
+        //             "author": "author",
+        //             "category": "category"
+        //         }
+        //     },
+        //     {
+        //         "id": 7,
+        //         "barcode": "NDT147258369",
+        //         "exportedPrice": 888.0,
+        //         "discount": 0.25,
+        //         "status": "yes",
+        //         "bookModel": {
+        //             "id": 45,
+        //             "title": "title",
+        //             "summary": "summary",
+        //             "numberOfPage": 200,
+        //             "language": "language",
+        //             "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
+        //             "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
+        //             "description": "description",
+        //             "importedPrice": 10.0,
+        //             "importedQuantity": 10,
+        //             "exportedQuantity": 1,
+        //             "publisher": "publisher",
+        //             "author": "author",
+        //             "category": "category"
+        //         }
+        //     },
+        //     {
+        //         "id": 7,
+        //         "barcode": "NDT147258369",
+        //         "exportedPrice": 888.0,
+        //         "discount": 0.25,
+        //         "status": "yes",
+        //         "bookModel": {
+        //             "id": 45,
+        //             "title": "title",
+        //             "summary": "summary",
+        //             "numberOfPage": 200,
+        //             "language": "language",
+        //             "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
+        //             "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
+        //             "description": "description",
+        //             "importedPrice": 10.0,
+        //             "importedQuantity": 10,
+        //             "exportedQuantity": 1,
+        //             "publisher": "publisher",
+        //             "author": "author",
+        //             "category": "category"
+        //         }
+        //     },
+        //     {
+        //         "id": 8,
+        //         "barcode": "NDT147258369",
+        //         "exportedPrice": 888.0,
+        //         "discount": 0.25,
+        //         "status": "yes",
+        //         "bookModel": {
+        //             "id": 46,
+        //             "title": "title",
+        //             "summary": "summary",
+        //             "numberOfPage": 200,
+        //             "language": "language",
+        //             "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
+        //             "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpga7663d04-fa69-43dc-882d-51acdd7c05ff?alt=media&token=8119e870-13e3-44b6-bff8-646789fb65c1",
+        //             "description": "description",
+        //             "importedPrice": 10.0,
+        //             "importedQuantity": 10,
+        //             "exportedQuantity": 1,
+        //             "publisher": "publisher",
+        //             "author": "author",
+        //             "category": "category"
+        //         }
+        //     }
+        // ]);
+
+        BookItemService.findAll().then(response => {
+            return new Promise((resolve, reject) => {
+                if (response.ok) resolve(response.text());
+                reject();
+            })
+        }).then(result => {
+            setProducts(JSON.parse(result));
+            toast.success("Load book item success")
+        }).catch(error => {
+            toast.error("Load book item error")
+        });
     }, []);
 
     const onSortChange = (event) => {

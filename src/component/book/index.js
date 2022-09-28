@@ -5,14 +5,13 @@ import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-import { FileUpload } from 'primereact/fileupload';
 import { Toolbar } from 'primereact/toolbar';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import * as BookService from '../../service/BookService';
 import * as FirebaseService from '../../service/FirebaseService';
+import { toast } from 'react-toastify';
 import './index.css';
 
 const Book = () => {
@@ -34,6 +33,7 @@ const Book = () => {
         category: "category",
     };
 
+    let [refresh, setRefresh] = useState(1);
     let [products, setProducts] = useState(null);
     let [productDialog, setProductDialog] = useState(false);
     let [deleteProductDialog, setDeleteProductDialog] = useState(false);
@@ -45,7 +45,6 @@ const Book = () => {
         file: "text"
     })
     let [file, setFile] = useState({ image: "", file: "" })
-    let toast = useRef(null);
     let dt = useRef(null);
 
     useEffect(() => {
@@ -56,12 +55,13 @@ const Book = () => {
                 reject();
             })
         }).then(result => {
-            setProducts(JSON.parse(result))
+            setProducts(JSON.parse(result));
+            toast.success("Load book success")
         }).catch(error => {
-            alert("error");
+            toast.error("Load book error")
         });
 
-    }, []);
+    }, [refresh]);
 
     const openNew = () => {
         setProduct(emptyProduct);
@@ -80,23 +80,20 @@ const Book = () => {
     const saveProduct = async () => {
         if (selectedOption.image === "file" && file.image) {
             const urlImage = await FirebaseService.uploadImage(file.image);
-            console.log(urlImage);
             product = { ...product, image: urlImage };
         }
         if (selectedOption.file === "file" && file.file) {
             const urlFile = await FirebaseService.uploadFile(file.file);
-            console.log(urlFile);
             product = { ...product, file: urlFile };
         }
         const respond = await BookService.save(product);
 
         if (respond.ok) {
             const data = await respond.text();
-            setProducts([...products, JSON.parse(data)]);
-            alert("OK")
+            toast.success("Save book success")
         }
         else {
-            alert("NO")
+            toast.error("Save book error")
         }
 
     }
@@ -116,7 +113,6 @@ const Book = () => {
         setProducts(_products);
         setDeleteProductDialog(false);
         setProduct(emptyProduct);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     }
 
     const exportCSV = () => { dt.current.exportCSV(); }
@@ -139,8 +135,8 @@ const Book = () => {
     const rightToolbarTemplate = () => {
         return (
             <React.Fragment>
-                {/* <FileUpload mode="basic" name="demo[]" auto url="https://primefaces.org/primereact/showcase/upload.php" accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} /> */}
                 <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
+                <Button label="Refresh" icon="pi pi-upload" className="mx-3" onClick={e => setRefresh(refresh * -1)} />
             </React.Fragment>
         )
     }
@@ -182,7 +178,6 @@ const Book = () => {
 
     return (
         <div className="datatable-crud-demo capitalize m-3">
-            <Toast ref={toast} />
             <div className="card">
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
                 <DataTable
