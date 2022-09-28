@@ -14,6 +14,7 @@ import ShowingDetail from './component/book/showingdetail';
 import DeletingBook from './component/book/deletingbook';
 import Book from './component/book';
 import BookItem from './component/bookitem';
+import DetailBookItem from './component/bookitem/detailbookitem';
 export const UserInformation = createContext();
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
             <Route path="/book" element={<Book />} />
 
             <Route path="/bookitem" element={<BookItem />} />
+            <Route path="/bookitem/:id" element={<DetailBookItem />} />
 
           </Routes>
           <Footer></Footer>

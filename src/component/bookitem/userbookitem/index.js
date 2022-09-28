@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
 import './index.css';
+import { Link } from 'react-router-dom';
 
 const UserBookItem = () => {
     const [products, setProducts] = useState(null);
@@ -142,7 +143,9 @@ const UserBookItem = () => {
                     <div className="product-list-action">
                         <span className="product-price">${bookItem.exportedPrice}</span>
                         <Button icon="pi pi-shopping-cart" label="Add to Cart"></Button>
-                        <Button label="More" className="p-button-outlined p-button-info"></Button>
+                        <Link to={`/bookitem/${bookItem.id}`} className="block w-full">
+                            <Button label='More' className="p-button-outlined p-button-info w-full"></Button>
+                        </Link>
                         <span className="product-badge">Hello</span>
                     </div>
                 </div>
@@ -168,10 +171,10 @@ const UserBookItem = () => {
                     </div>
                     <div className="product-grid-item-bottom ">
                         <Button icon="pi pi-shopping-cart" label="Add to Cart"></Button>
-                        <Button label="More" className="p-button-outlined p-button-info"></Button>
+                        <Link to={`/bookitem/${bookItem.id}`} className="block"><Button label='More' className="p-button-outlined p-button-info" /></Link>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         );
     }
 
