@@ -50,5 +50,15 @@ function findById(id) {
     return fetch(`http://localhost:8080/api/book/${id}`, requestOptions);
 }
 
+function findNotPostedBook() {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", accessToken);
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+    };
+    return fetch(`http://localhost:8080/api/book/notpostedbook`, requestOptions);
+}
 
-export { save, findAll, findById }
+
+export { save, findAll, findById, findNotPostedBook }

@@ -30,60 +30,26 @@ const AdminBookItem = () => {
         }
     };
 
+    let [refresh, setRefresh] = useState(false);
     let [products, setProducts] = useState(null);
-    let [privateBooks, setPrivateBooks] = useState([]);
+    let [postedBooks, setPostedBooks] = useState([]);
     let [productDialog, setProductDialog] = useState(false);
     let [deleteProductDialog, setDeleteProductDialog] = useState(false);
     let [product, setProduct] = useState(emptyProduct);
-    let [selectedProducts, setSelectedProducts] = useState(null);
     let [globalFilter, setGlobalFilter] = useState(null);
     let dt = useRef(null);
 
     function getDataSelect() {
-        return privateBooks.map((value) => {
+        return postedBooks.map((value) => {
             return ({
                 key: value.id,
-                label: value.id,
+                label: `${value.id} ${value.title}`,
                 icon: "pi pi-fw pi-cog"
             })
         })
     }
 
     useEffect(() => {
-        setPrivateBooks([
-            {
-                "id": 45,
-                "title": "title",
-                "summary": "summary",
-                "numberOfPage": 200,
-                "language": "language",
-                "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
-                "description": "description",
-                "importedPrice": 10.0,
-                "importedQuantity": 10,
-                "exportedQuantity": 1,
-                "publisher": "publisher",
-                "author": "author",
-                "category": "category"
-            },
-            {
-                "id": 46,
-                "title": "title",
-                "summary": "summary",
-                "numberOfPage": 200,
-                "language": "language",
-                "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-                "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
-                "description": "description",
-                "importedPrice": 10.0,
-                "importedQuantity": 10,
-                "exportedQuantity": 1,
-                "publisher": "publisher",
-                "author": "author",
-                "category": "category"
-            }
-        ])
 
         BookItemService.findAll().then(response => {
             return new Promise((resolve, reject) => {
@@ -97,8 +63,20 @@ const AdminBookItem = () => {
             toast.error("Load book item error")
         });
 
+        BookService.findNotPostedBook().then(response => {
+            return new Promise((resolve, reject) => {
+                if (response.ok) resolve(response.text());
+                reject();
+            })
+        }).then(result => {
+            setPostedBooks(JSON.parse(result));
+            toast.success("Load not posted book item success")
+        }).catch(error => {
+            toast.error("Load not posted book item error")
+        });
 
-    }, []);
+
+    }, [refresh]);
 
     const openNew = () => {
         setProduct(emptyProduct);
@@ -116,7 +94,18 @@ const AdminBookItem = () => {
 
     const saveProduct = async () => {
         console.log(product)
+        BookItemService.save(product, product.bookModel.id).then(response => {
+            return new Promise((resolve, reject) => {
+                if (response.ok) resolve(response.text());
+                reject();
+            })
+        }).then(result => {
+            toast.success("Load book item success");
+            setRefresh(!refresh)
+        }).catch(error => {
+            toast.error("Load book item error");
 
+        });
     }
 
     const editProduct = (product) => {
@@ -139,12 +128,6 @@ const AdminBookItem = () => {
 
     const exportCSV = () => { dt.current.exportCSV(); }
 
-    const onInputChange = (e, name) => {
-        const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
-        _product[`${name}`] = val;
-        setProduct(_product);
-    }
 
     const leftToolbarTemplate = () => {
         return (
@@ -157,8 +140,8 @@ const AdminBookItem = () => {
     const rightToolbarTemplate = () => {
         return (
             <React.Fragment>
-                {/* <FileUpload mode="basic" name="demo[]" auto url="https://primefaces.org/primereact/showcase/upload.php" accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} /> */}
                 <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
+                <Button label="Refresh" icon="pi pi-upload" className="mx-3" onClick={e => setRefresh(!refresh)} />
             </React.Fragment>
         )
     }
@@ -209,15 +192,14 @@ const AdminBookItem = () => {
                     className='capitalize'
                     ref={dt}
                     value={products}
-                    selection={selectedProducts}
-                    onSelectionChange={(e) => setSelectedProducts(e.value)}
-                    dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                    dataKey="id" paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                     globalFilter={globalFilter} header={header} responsiveLayout="scroll">
 
                     <Column header="action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
                     <Column field="id" header="id BookItem" sortable ></Column>
+                    <Column field="bookModel.id" header="Id book" sortable ></Column>
                     <Column field="barcode" header="barcode" sortable ></Column>
                     <Column field="exportedPrice" header="exportedPrice" sortable ></Column>
                     <Column field="discount" header="discount" sortable ></Column>

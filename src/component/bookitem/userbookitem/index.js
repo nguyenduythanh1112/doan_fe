@@ -169,8 +169,8 @@ const UserBookItem = () => {
 
     const renderGridItem = (bookItem) => {
         return (
-            <div className="col-12 md:col-3">
-                <div className="product-grid-item card">
+            <div className="col-12 md:col-4">
+                <div className="product-grid-item card w-full">
                     <div className="product-grid-item-top">
                         <div>
                             <i className="pi pi-tag product-category-icon"></i>
