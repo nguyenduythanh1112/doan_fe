@@ -15,6 +15,8 @@ import DeletingBook from './component/book/deletingbook';
 import Book from './component/book';
 import BookItem from './component/bookitem';
 import DetailBookItem from './component/bookitem/detailbookitem';
+import SaveBook from './component/book/SaveBook';
+import ShowBook from './component/book/ShowBook';
 export const UserInformation = createContext();
 
 function App() {
@@ -33,23 +35,24 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Header></Header>
-          <Routes>
-            <Route path="/" element={<ShowingBook />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/register" element={<Register />} />
+          <div className="p-10">
+            <Routes>
+              <Route path="/" element={<ShowingBook />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/register" element={<Register />} />
 
-            <Route path="/showingbook" element={<ShowingBook />} />
-            <Route path="/addingbook" element={<AddingBook />} />
-            <Route path="/updatingbook/:id" element={<UpdatingBook />}></Route>
-            <Route path="/showingdetail/:id" element={<ShowingDetail />}></Route>
-            <Route path="/deletingbook/:id" element={<DeletingBook />}></Route>
-            <Route path="/book" element={<Book />} />
+              <Route path="/book" element={<ShowBook />} />
+              <Route path="/book/save" element={<SaveBook />} />
+              <Route path="/book/show" element={<ShowBook />} />
+              <Route path="/book/save/:id" element={<SaveBook />} />
 
-            <Route path="/bookitem" element={<BookItem />} />
-            <Route path="/bookitem/:id" element={<DetailBookItem />} />
+              <Route path="/bookitem" element={<BookItem />} />
+              <Route path="/bookitem/show/:id" element={<DetailBookItem />} />
 
-          </Routes>
+            </Routes>
+          </div>
+
           <Footer></Footer>
         </BrowserRouter>
       </div >

@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import * as BookItemService from '../../../service/BookItemService';
 import * as BookService from '../../../service/BookService';
 import './index.css';
+import { Link } from 'react-router-dom';
 
 const AdminBookItem = () => {
 
@@ -83,101 +84,6 @@ const AdminBookItem = () => {
                 "category": "category"
             }
         ])
-
-        // setProducts([
-        //     {
-        //         "id": 7,
-        //         "barcode": "NDT147258369",
-        //         "exportedPrice": 888.0,
-        //         "discount": 0.25,
-        //         "status": "yes",
-        //         "bookModel": {
-        //             "id": 45,
-        //             "title": "title",
-        //             "summary": "summary",
-        //             "numberOfPage": 200,
-        //             "language": "language",
-        //             "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-        //             "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
-        //             "description": "description",
-        //             "importedPrice": 10.0,
-        //             "importedQuantity": 10,
-        //             "exportedQuantity": 1,
-        //             "publisher": "publisher",
-        //             "author": "author",
-        //             "category": "category"
-        //         }
-        //     },
-        //     {
-        //         "id": 7,
-        //         "barcode": "NDT147258369",
-        //         "exportedPrice": 888.0,
-        //         "discount": 0.25,
-        //         "status": "yes",
-        //         "bookModel": {
-        //             "id": 45,
-        //             "title": "title",
-        //             "summary": "summary",
-        //             "numberOfPage": 200,
-        //             "language": "language",
-        //             "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-        //             "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
-        //             "description": "description",
-        //             "importedPrice": 10.0,
-        //             "importedQuantity": 10,
-        //             "exportedQuantity": 1,
-        //             "publisher": "publisher",
-        //             "author": "author",
-        //             "category": "category"
-        //         }
-        //     },
-        //     {
-        //         "id": 7,
-        //         "barcode": "NDT147258369",
-        //         "exportedPrice": 888.0,
-        //         "discount": 0.25,
-        //         "status": "yes",
-        //         "bookModel": {
-        //             "id": 45,
-        //             "title": "title",
-        //             "summary": "summary",
-        //             "numberOfPage": 200,
-        //             "language": "language",
-        //             "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-        //             "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpgb18794ce-d325-4129-8498-fe95a6ced7ba?alt=media&token=99697f6b-4341-4dc3-be29-8ea246e50760",
-        //             "description": "description",
-        //             "importedPrice": 10.0,
-        //             "importedQuantity": 10,
-        //             "exportedQuantity": 1,
-        //             "publisher": "publisher",
-        //             "author": "author",
-        //             "category": "category"
-        //         }
-        //     },
-        //     {
-        //         "id": 8,
-        //         "barcode": "NDT147258369",
-        //         "exportedPrice": 888.0,
-        //         "discount": 0.25,
-        //         "status": "yes",
-        //         "bookModel": {
-        //             "id": 46,
-        //             "title": "title",
-        //             "summary": "summary",
-        //             "numberOfPage": 200,
-        //             "language": "language",
-        //             "image": "https://images-na.ssl-images-amazon.com/images/I/51kpoART0HL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-        //             "file": "https://firebasestorage.googleapis.com/v0/b/bookstore-1efe1.appspot.com/o/file%2F1.jpga7663d04-fa69-43dc-882d-51acdd7c05ff?alt=media&token=8119e870-13e3-44b6-bff8-646789fb65c1",
-        //             "description": "description",
-        //             "importedPrice": 10.0,
-        //             "importedQuantity": 10,
-        //             "exportedQuantity": 1,
-        //             "publisher": "publisher",
-        //             "author": "author",
-        //             "category": "category"
-        //         }
-        //     }
-        // ])
 
         BookItemService.findAll().then(response => {
             return new Promise((resolve, reject) => {
@@ -265,7 +171,10 @@ const AdminBookItem = () => {
         return (
             <React.Fragment>
                 <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning" onClick={() => confirmDeleteProduct(rowData)} />
+                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mr-2" onClick={() => confirmDeleteProduct(rowData)} />
+                <Link to={`show/${rowData.id}`} >
+                    <Button icon="pi pi-eye" className="p-button-rounded p-button-warning" />
+                </Link>
             </React.Fragment>
         );
     }
@@ -307,7 +216,7 @@ const AdminBookItem = () => {
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                     globalFilter={globalFilter} header={header} responsiveLayout="scroll">
 
-                    <Column header="action" body={actionBodyTemplate} exportable={false} ></Column>
+                    <Column header="action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
                     <Column field="id" header="id BookItem" sortable ></Column>
                     <Column field="barcode" header="barcode" sortable ></Column>
                     <Column field="exportedPrice" header="exportedPrice" sortable ></Column>
@@ -326,6 +235,9 @@ const AdminBookItem = () => {
                     <Column field="bookModel.publisher" header="publisher" sortable ></Column>
                     <Column field="bookModel.author" header="author" sortable ></Column>
                     <Column field="bookModel.category" header="category" sortable ></Column>
+                    <Column field="bookModel.height" header="height" sortable ></Column>
+                    <Column field="bookModel.weight" header="weight" sortable ></Column>
+                    <Column field="bookModel.longs" header="longs" sortable ></Column>
 
                 </DataTable>
             </div>
