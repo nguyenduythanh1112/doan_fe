@@ -1,23 +1,19 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import AddingBook from './component/book/addingbook';
-import ShowingBook from './component/book/showingbook';
 import Login from './component/login';
 import Logout from './component/logout';
 import Register from './component/register';
 import Header from './component/header';
 import Footer from './component/footer';
-import UpdatingBook from './component/book/updatingbook';
 import { createContext, useState } from 'react';
 import { isExpired, decodeToken } from 'react-jwt';
-import ShowingDetail from './component/book/showingdetail';
-import DeletingBook from './component/book/deletingbook';
 import Book from './component/book';
 import BookItem from './component/bookitem';
 import DetailBookItem from './component/bookitem/detailbookitem';
 import SaveBook from './component/book/SaveBook';
 import ShowBook from './component/book/ShowBook';
 import Home from './component/home';
+import Cart from './component/cart';
 export const UserInformation = createContext();
 
 function App() {
@@ -50,6 +46,9 @@ function App() {
 
               <Route path="/bookitem" element={<BookItem />} />
               <Route path="/bookitem/show/:id" element={<DetailBookItem />} />
+
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/cart/show" element={<Cart />} />
 
             </Routes>
           </div>

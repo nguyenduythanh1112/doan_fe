@@ -1,9 +1,29 @@
-import { useState } from 'react';
+import { Button } from 'primereact/button';
+import { DataView } from 'primereact/dataview';
+import { useEffect, useState } from 'react';
+import './index.css';
+import { Link } from 'react-router-dom';
+import * as CartService from '../../service/CartService';
+import { toast } from 'react-toastify';
+
 function UserCart() {
 
-    const [cart, setCart] = useState(null);
+    const [lineItems, setLineItems] = useState([]);
 
-    const renderLineItem = (lineItem) => {
+    useEffect(() => {
+        const fetch = async () => {
+            const respond = await CartService.findByUsername();
+            const data = await respond.text();
+            if (respond.ok) {
+                toast.success("Fetch Cart OK: ");
+                setLineItems(JSON.parse(data))
+            }
+            else toast.error(data);
+        }
+        fetch();
+    }, [])
+
+    const LineItem = (lineItem) => {
         return (
             <div className="col-12">
                 <div className="product-list-item">
@@ -12,15 +32,18 @@ function UserCart() {
                         <div className="product-name">{lineItem.bookItemModel.bookModel.title}</div>
                         <div className="product-description">{lineItem.bookItemModel.bookModel.description}</div>
                         <i className="pi pi-tag product-category-icon"></i><span className="product-category">{lineItem.bookItemModel.bookModel.category}</span>
-                        <ProgressBar value={50} className="m-2"></ProgressBar>
-                        <Rating value={5} stars={5} cancel={false} className="m-3" />
+                        <div className='grid mt-3 justify-center'>
+                            <Button label="+" className="p-button-raised p-button-info p-button-text col-1" />
+                            <h1 className='mx-2 flex justify-center col-3 text-center product-category'>{lineItem.quantity}</h1>
+                            <Button label="-" className="p-button-raised p-button-info p-button-text col-1" />
+                            <h1 className='mx-2 flex justify-center col-5 text-center product-category'>Total: {lineItem.quantity * lineItem.bookItemModel.exportedPrice}</h1>
+                        </div>
                     </div>
                     <div className="product-list-action">
                         <span className="product-price">${lineItem.bookItemModel.exportedPrice}</span>
                         <Link to={`/bookitem/show/${lineItem.bookItemModel.id}`} className="block w-full">
                             <Button label='More' className="p-button-outlined p-button-info w-full"></Button>
                         </Link>
-                        <span className="product-badge">Hello</span>
                     </div>
                 </div>
             </div>
@@ -29,10 +52,13 @@ function UserCart() {
 
 
     return (
-        <div>
-
+        <div className="cart">
+            <div className="dataview-demo">
+                <div className="card">
+                    <DataView value={lineItems} layout="list" itemTemplate={LineItem} paginator rows={9} />
+                </div>
+            </div>
         </div>
     );
 }
-
 export default UserCart;
