@@ -17,6 +17,7 @@ import BookItem from './component/bookitem';
 import DetailBookItem from './component/bookitem/detailbookitem';
 import SaveBook from './component/book/SaveBook';
 import ShowBook from './component/book/ShowBook';
+import Home from './component/home';
 export const UserInformation = createContext();
 
 function App() {
@@ -35,9 +36,9 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Header></Header>
-          <div className="p-10">
+          <div className="">
             <Routes>
-              <Route path="/" element={<ShowingBook />} />
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/register" element={<Register />} />

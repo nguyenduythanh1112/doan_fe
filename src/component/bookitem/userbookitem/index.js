@@ -3,12 +3,15 @@ import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { toast } from 'react-toastify';
+import { ProgressBar } from 'primereact/progressbar';
 import * as BookItemService from '../../../service/BookItemService';
 import './index.css';
 import { Link } from 'react-router-dom';
+import { Rating } from 'primereact/rating';
+import { Carousel } from 'primereact/carousel';
 
 const UserBookItem = () => {
-    const [products, setProducts] = useState(null);
+    const [products, setProducts] = useState([]);
     const [layout, setLayout] = useState('grid');
     const [sortKey, setSortKey] = useState(null);
     const [sortOrder, setSortOrder] = useState(null);
@@ -16,6 +19,25 @@ const UserBookItem = () => {
     const sortOptions = [
         { label: 'Price High to Low', value: '!price' },
         { label: 'Price Low to High', value: 'price' },
+    ];
+
+
+    const responsiveOptions = [
+        {
+            breakpoint: '1024px',
+            numVisible: 3,
+            numScroll: 3
+        },
+        {
+            breakpoint: '600px',
+            numVisible: 2,
+            numScroll: 2
+        },
+        {
+            breakpoint: '480px',
+            numVisible: 1,
+            numScroll: 1
+        }
     ];
 
 
@@ -153,11 +175,13 @@ const UserBookItem = () => {
                         <div className="product-name">{bookItem.bookModel.title}</div>
                         <div className="product-description">{bookItem.bookModel.description}</div>
                         <i className="pi pi-tag product-category-icon"></i><span className="product-category">{bookItem.bookModel.category}</span>
+                        <ProgressBar value={50} className="m-2"></ProgressBar>
+                        <Rating value={5} stars={5} cancel={false} className="m-3" />
                     </div>
                     <div className="product-list-action">
                         <span className="product-price">${bookItem.exportedPrice}</span>
                         <Button icon="pi pi-shopping-cart" label="Add to Cart"></Button>
-                        <Link to={`/bookitem/${bookItem.id}`} className="block w-full">
+                        <Link to={`/bookitem/show/${bookItem.id}`} className="block w-full">
                             <Button label='More' className="p-button-outlined p-button-info w-full"></Button>
                         </Link>
                         <span className="product-badge">Hello</span>
@@ -170,7 +194,7 @@ const UserBookItem = () => {
     const renderGridItem = (bookItem) => {
         return (
             <div className="col-12 md:col-4">
-                <div className="product-grid-item card w-full">
+                <div className="product-grid-item card w-4/5 justify-between flex flex-column m-auto my-2">
                     <div className="product-grid-item-top">
                         <div>
                             <i className="pi pi-tag product-category-icon"></i>
@@ -178,19 +202,53 @@ const UserBookItem = () => {
                         </div>
                     </div>
                     <div className="product-grid-item-content">
-                        <img className="flex m-auto my-3 p-1" src={bookItem.bookModel.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={bookItem.name} />
+                        <img className="flex m-auto my-3" src={bookItem.bookModel.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={bookItem.name} />
                         <div className="product-name">{bookItem.bookModel.title}</div>
                         <div className="product-description">{bookItem.bookModel.description}</div>
                         <div className="product-price my-3">Price: {bookItem.exportedPrice}</div>
                     </div>
+                    <div className='flex flex-column'>
+                        <ProgressBar value={50} className="m-2"></ProgressBar>
+                        <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
+                    </div>
                     <div className="product-grid-item-bottom ">
-                        <Button icon="pi pi-shopping-cart" label="Add to Cart"></Button>
-                        <Link to={`/bookitem/${bookItem.id}`} className="block"><Button label='More' className="p-button-outlined p-button-info" /></Link>
+                        <Button icon="pi pi-cart-plus"></Button>
+                        <Link to={`/bookitem/show/${bookItem.id}`} className="block"><Button className="p-button-outlined" icon="pi pi-plus-circle" /></Link>
                     </div>
                 </div >
             </div >
         );
     }
+
+    const renderCarouselItem = (bookItem) => {
+        return (
+            <div className="col-12 md:col-4 w-full">
+                <div className="product-grid-item card w-4/5 justify-between flex flex-column m-auto my-2">
+                    <div className="product-grid-item-top">
+                        <div>
+                            <i className="pi pi-tag product-category-icon"></i>
+                            <span className="product-category">{bookItem.bookModel.category}</span>
+                        </div>
+                    </div>
+                    <div className="product-grid-item-content">
+                        <img className="flex m-auto my-3" src={bookItem.bookModel.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={bookItem.name} />
+                        <div className="product-name">{bookItem.bookModel.title}</div>
+                        <div className="product-description">{bookItem.bookModel.description}</div>
+                        <div className="product-price my-3">Price: {bookItem.exportedPrice}</div>
+                    </div>
+                    <div className='flex flex-column'>
+                        <ProgressBar value={50} className="m-2"></ProgressBar>
+                        <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
+                    </div>
+                    <div className="product-grid-item-bottom ">
+                        <Button icon="pi pi-cart-plus"></Button>
+                        <Link to={`/bookitem/show/${bookItem.id}`} className="block"><Button className="p-button-outlined" icon="pi pi-plus-circle" /></Link>
+                    </div>
+                </div >
+            </div >
+        );
+    }
+
 
     const itemTemplate = (product, layout) => {
         if (!product) {
@@ -220,6 +278,8 @@ const UserBookItem = () => {
 
     return (
         <div className="dataview-demo">
+            <Carousel value={products} numVisible={3} numScroll={1} responsiveOptions={responsiveOptions} className="custom-carousel" circular
+                autoplayInterval={3000} itemTemplate={renderCarouselItem} header={<h5 class="text-center">Books</h5>} />
             <div className="card">
                 <DataView value={products} layout={layout} header={header}
                     itemTemplate={itemTemplate} paginator rows={9}
