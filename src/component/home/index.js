@@ -23,20 +23,20 @@ const Home = () => {
     useEffect(() => {
         setImages([
             {
-                itemImageSrc: "https://www.primefaces.org/primereact/images/galleria/galleria4.jpg",
-                thumbnailImageSrc: "https://www.primefaces.org/primereact/images/galleria/galleria4.jpg"
+                itemImageSrc: "https://truongquochoc.com/wp-content/uploads/2020/10/top-30-hinh-anh-canh-dong-hoa-dep-nhat-the-gioi-1.jpg",
+                thumbnailImageSrc: "https://truongquochoc.com/wp-content/uploads/2020/10/top-30-hinh-anh-canh-dong-hoa-dep-nhat-the-gioi-1.jpg"
             },
             {
-                itemImageSrc: "https://www.primefaces.org/primereact/images/galleria/galleria1.jpg",
-                thumbnailImageSrc: "https://www.primefaces.org/primereact/images/galleria/galleria1.jpg"
+                itemImageSrc: "https://loanthehongnhan.vn/hinh-nen-dep-full-hd-1920x1080/imager_2_36260_700.jpg",
+                thumbnailImageSrc: "https://loanthehongnhan.vn/hinh-nen-dep-full-hd-1920x1080/imager_2_36260_700.jpg"
             },
             {
-                itemImageSrc: "https://www.primefaces.org/primereact/images/galleria/galleria2.jpg",
-                thumbnailImageSrc: "https://www.primefaces.org/primereact/images/galleria/galleria2.jpg"
+                itemImageSrc: "https://chiase24.com/wp-content/uploads/2022/02/tang-hap-hanh-na_n-full-hd-1920-x-1080-aap-nhayt-1.jpg",
+                thumbnailImageSrc: "https://chiase24.com/wp-content/uploads/2022/02/tang-hap-hanh-na_n-full-hd-1920-x-1080-aap-nhayt-1.jpg"
             },
             {
-                itemImageSrc: "https://www.primefaces.org/primereact/images/galleria/galleria3.jpg",
-                thumbnailImageSrc: "https://www.primefaces.org/primereact/images/galleria/galleria3.jpg"
+                itemImageSrc: "https://chiase24.com/wp-content/uploads/2022/02/tang-hap-hanh-na_n-full-hd-1920-x-1080-aap-nhayt-22.jpg",
+                thumbnailImageSrc: "https://chiase24.com/wp-content/uploads/2022/02/tang-hap-hanh-na_n-full-hd-1920-x-1080-aap-nhayt-22.jpg"
             },
         ])
     }, []);

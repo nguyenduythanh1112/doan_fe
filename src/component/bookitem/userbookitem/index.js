@@ -194,7 +194,7 @@ const UserBookItem = () => {
     const renderGridItem = (bookItem) => {
         return (
             <div className="col-12 md:col-4">
-                <div className="product-grid-item card w-4/5 justify-between flex flex-column m-auto my-2">
+                <div className="product-grid-item card w-4/5 justify-between flex flex-column m-auto my-2 shadow-xl">
                     <div className="product-grid-item-top">
                         <div>
                             <i className="pi pi-tag product-category-icon"></i>
@@ -222,8 +222,8 @@ const UserBookItem = () => {
 
     const renderCarouselItem = (bookItem) => {
         return (
-            <div className="col-12 md:col-4 w-full">
-                <div className="product-grid-item card w-4/5 justify-between flex flex-column m-auto my-2">
+            <div className="col-12 md:col-4 w-full  ">
+                <div className="product-grid-item card w-4/5 justify-between flex flex-column m-auto my-2 border-none shadow-2xl">
                     <div className="product-grid-item-top">
                         <div>
                             <i className="pi pi-tag product-category-icon"></i>
@@ -279,7 +279,7 @@ const UserBookItem = () => {
     return (
         <div className="dataview-demo">
             <Carousel value={products} numVisible={3} numScroll={1} responsiveOptions={responsiveOptions} className="custom-carousel" circular
-                autoplayInterval={3000} itemTemplate={renderCarouselItem} header={<h5 class="text-center">Books</h5>} />
+                autoplayInterval={3000} itemTemplate={renderCarouselItem} header={<h5 class="text-center"></h5>} />
             <div className="card">
                 <DataView value={products} layout={layout} header={header}
                     itemTemplate={itemTemplate} paginator rows={9}

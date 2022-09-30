@@ -1,0 +1,15 @@
+.p-menuitem-text {
+    color: white !important;
+}
+
+.p-menuitem-icon {
+    color: white !important;
+}
+
+.p-menuitem-link:hover>.p-menuitem-text {
+    color: rgb(0, 0, 0) !important;
+}
+
+.p-menuitem-link:hover>.p-menuitem-icon {
+    color: rgb(0, 0, 0) !important;
+}

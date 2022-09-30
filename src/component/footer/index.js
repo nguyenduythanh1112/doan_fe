@@ -1,16 +1,14 @@
-import { Footer as FooterFlowbite } from "flowbite-react";
-import { GMap } from 'primereact/gmap';
-
-const options = {
-    center: { lat: 36.890257, lng: 30.707417 },
-    zoom: 12
-};
-
+import { Splitter, SplitterPanel } from 'primereact/splitter';
+import { Chip } from 'primereact/chip';
 
 function Footer() {
     return (
-        <div>
-            footer
+        <div className="m-3">
+            <div className="flex align-items-center flex-wrap">
+                <Chip label="Facebook" icon="pi pi-facebook" className="mr-2 mb-2 bg-cyan-800 text-cyan-50" />
+                <Chip label="Google" icon="pi pi-google" className="mr-2 mb-2 bg-cyan-800 text-cyan-50" />
+                <Chip label="Git" icon="pi pi-github" className="mb-2 bg-cyan-800 text-cyan-50" />
+            </div>
         </div>
     );
 }

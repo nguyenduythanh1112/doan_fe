@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { UserInformation } from '../../App';
 import { useContext } from 'react';
 import { Menubar } from 'primereact/menubar';
+import "./index.css";
 
 function AdminNavigation() {
     const { userInformation } = useContext(UserInformation);

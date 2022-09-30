@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { UserInformation } from '../../App';
 import { useContext } from 'react';
 import { Menubar } from 'primereact/menubar';
-
 function UserNavigation() {
     const { userInformation } = useContext(UserInformation);
 
@@ -50,8 +49,8 @@ function UserNavigation() {
         )
     }
     return (
-        <div className="card">
-            <Menubar model={items} />
+        <div className="card shadow-md bg-blue-800 ">
+            <Menubar model={items} className="bg-blue-800 rounded-none border-none" />
         </div>
     );
 }
