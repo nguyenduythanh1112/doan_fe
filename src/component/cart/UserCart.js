@@ -9,11 +9,25 @@ import { Link } from 'react-router-dom';
 import * as CartService from '../../service/CartService';
 import { toast } from 'react-toastify';
 import * as LineItemService from '../../service/LineItemService';
+import * as VnAddressService from '../../service/VnAddressService';
 
 function UserCart() {
 
     const [lineItems, setLineItems] = useState([]);
     const [refresh, setRefresh] = useState(true);
+    const [vnAddress, setVnAddress] = useState({ province: [], district: [], commune: [] });
+
+    const [information, setInformation] = useState({
+        city: {},
+        town: {},
+        ward: {},
+        detailAddress: {},
+        phoneNumber: {},
+        name: {},
+    })
+
+    // console.log(vnAddress);
+    console.log(information)
 
     useEffect(() => {
         const fetch = async () => {
@@ -26,6 +40,13 @@ function UserCart() {
             else toast.error(data);
         }
         fetch();
+        const getProvince = async () => {
+            const respond = await VnAddressService.getProvince();
+            const data = await respond.text();
+            setVnAddress({ ...vnAddress, "province": JSON.parse(data).results })
+        }
+        getProvince();
+
     }, [refresh])
 
     const handleAdd = async (bookItemId) => {
@@ -79,32 +100,78 @@ function UserCart() {
     }
 
 
+
+    const selectedCountryTemplate = (option, props) => {
+        if (option) return <div>{option.name}</div>
+        return <span>{props.placeholder}</span>
+    }
+
+
+    const onChangeProvince = async (e) => {
+        const respond = await VnAddressService.getDistrict(e.value.code);
+        const data = await respond.text();
+        setVnAddress({ ...vnAddress, "district": JSON.parse(data).results })
+        setInformation({ ...information, "city": e.value })
+    }
+
+    const onChangeDistrict = async (e) => {
+        const respond = await VnAddressService.getCommune(e.value.code);
+        const data = await respond.text();
+        setVnAddress({ ...vnAddress, "commune": JSON.parse(data).results })
+        setInformation({ ...information, "town": e.value })
+    }
+
+
+    const onChangeCommune = async (e) => {
+        setInformation({ ...information, "ward": e.value })
+    }
+
     return (
         <div className="grid">
             <div className="dataview-demo col-6">
                 <div className="card"><DataView value={lineItems} layout="list" itemTemplate={LineItem} paginator rows={10} /></div>
             </div>
             <div className="col-6">
-                <span className="p-float-label">
-                    <Dropdown className="w-full" />
-                    <label>City</label>
+                {vnAddress.province.length !== 0 &&
+                    <span className="p-float-label my-10 h-10">
+                        <Dropdown value={information.city} options={vnAddress.province}
+                            onChange={onChangeProvince}
+                            optionLabel="name"
+                            valueTemplate={selectedCountryTemplate}
+                            itemTemplate={e => e.name}
+                            className="w-full h-full" />
+                        <label>Province</label>
+                    </span>}
+                {vnAddress.district.length !== 0 &&
+                    <span className="p-float-label my-10 h-10">
+                        <Dropdown value={information.town} options={vnAddress.district}
+                            onChange={onChangeDistrict}
+                            optionLabel="name"
+                            valueTemplate={selectedCountryTemplate}
+                            itemTemplate={e => e.name}
+                            className="w-full h-full" />
+                        <label>District</label>
+                    </span>}
+                {vnAddress.commune.length !== 0 &&
+                    <span className="p-float-label my-10 h-10">
+                        <Dropdown value={information.ward} options={vnAddress.commune}
+                            onChange={onChangeCommune}
+                            optionLabel="name"
+                            valueTemplate={selectedCountryTemplate}
+                            itemTemplate={e => e.name}
+                            className="w-full h-full" />
+                        <label>Commune</label>
+                    </span>}
+                <span className="p-float-label my-10"> <InputTextarea rows={3} className="w-full" /><label >detailAddress</label></span>
+                <span className="p-float-label my-10 h-10">
+                    <Dropdown className="w-full h-full" />
+                    <label>Shipment</label>
                 </span>
-                <span className="p-float-label">
-                    <Dropdown className="w-full" />
-                    <label>Counter</label>
+                <span className="p-float-label my-10 h-10">
+                    <Dropdown className="w-full h-full" />
+                    <label>Payment</label>
                 </span>
-                <span className="p-float-label">
-                    <Dropdown className="w-full" />
-                    <label>Counter</label>
-                </span>
-                <span className="p-float-label">
-                    <InputTextarea rows={3} className="w-full" />
-                    <label >Textarea</label>
-                </span>
-                <span className="p-float-label">
-                    <Dropdown className="w-full" />
-                    <label>Counter</label>
-                </span>
+                <Button label='Order' className="w-full h-20"></Button>
             </div>
         </div>
     );
