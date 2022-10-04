@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import './index.css';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import * as CartService from '../../service/CartService';
 import * as LineItemService from '../../service/LineItemService';
 import * as ShipmentService from '../../service/ShipmentService';
@@ -18,7 +17,6 @@ import * as OrderService from '../../service/OrderService';
 
 function UserCart() {
 
-    const navigate = useNavigate();
     const [lineItems, setLineItems] = useState([]);
     const [refresh, setRefresh] = useState(true);
     const [shipments, setShipments] = useState([]);
@@ -29,6 +27,8 @@ function UserCart() {
     const [information, setInformation] = useState({ city: "", town: "", ward: "", detailAddress: "", phoneNumber: "", name: "", })
     let totalPrice = 0
     lineItems.forEach(lineItem => totalPrice += lineItem.quantity * lineItem.bookItemModel.exportedPrice);
+
+    console.log(shipments)
 
     useEffect(() => {
         const fetch = async () => {
@@ -87,6 +87,17 @@ function UserCart() {
 
     }
 
+    const handleDelete = async (bookItemId) => {
+        const respond = await LineItemService.deleteLineItem(bookItemId);
+        const data = await respond.text();
+        if (respond.ok) {
+            toast.success("Delete Line item ok");
+            setRefresh(!refresh);
+        }
+        else toast.error(data);
+
+    }
+
     const handleOrder = async () => {
         const respond = await OrderService.create(payment.id, shipment.id, information);
         const data = await respond.text();
@@ -118,7 +129,7 @@ function UserCart() {
                         <Link to={`/bookitem/show/${lineItem.bookItemModel.id}`} className="block w-full">
                             <Button label='More' className="p-button-outlined p-button-info w-full"></Button>
                         </Link>
-                        <Button label='Delete' className="p-button-danger w-full"></Button>
+                        <Button label='Delete' className="p-button-danger w-full" onClick={e => handleDelete(lineItem.bookItemModel.id)}></Button>
                     </div>
                 </div>
             </div>

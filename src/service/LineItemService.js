@@ -42,4 +42,22 @@ const subtract = (bookItemId) => {
     return fetch("http://localhost:8080/api/lineitem/subtract", requestOptions);
 }
 
-export { save, add, subtract }
+const deleteLineItem = (bookItemId) => {
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", accessToken);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("bookItemId", bookItemId);
+
+    var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: urlencoded,
+    };
+
+    return fetch("http://localhost:8080/api/lineitem", requestOptions)
+}
+
+export { save, add, subtract, deleteLineItem }
