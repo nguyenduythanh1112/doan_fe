@@ -12,6 +12,7 @@ import BookItem from './component/bookitem';
 import DetailBookItem from './component/bookitem/detailbookitem';
 import SaveBook from './component/book/SaveBook';
 import ShowBook from './component/book/ShowBook';
+import AnnouncementOrder from './component/order/AnnouncementOrder';
 import Home from './component/home';
 import Cart from './component/cart';
 export const UserInformation = createContext();
@@ -49,6 +50,8 @@ function App() {
 
               <Route path="/cart" element={<Cart />} />
               <Route path="/cart/show" element={<Cart />} />
+
+              <Route path="/announcepayonline" element={<AnnouncementOrder />} />
 
             </Routes>
           </div>

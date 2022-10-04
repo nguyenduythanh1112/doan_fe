@@ -15,11 +15,11 @@ function UserNavigation() {
             icon: 'pi pi-book',
         },
         {
-            label: <Link to="/">Order</Link>,
+            label: <Link to="/order">Order</Link>,
             icon: 'pi pi-calculator',
         },
         {
-            label: <Link to="/">Cart</Link>,
+            label: <Link to="/cart">Cart</Link>,
             icon: 'pi pi-shopping-cart',
         },
 
