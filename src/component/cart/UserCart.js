@@ -14,6 +14,7 @@ import * as LineItemService from '../../service/LineItemService';
 import * as ShipmentService from '../../service/ShipmentService';
 import * as PaymentService from '../../service/PaymentService';
 import * as OrderService from '../../service/OrderService';
+import * as InformationService from '../../service/InformationService';
 
 function UserCart() {
 
@@ -28,7 +29,7 @@ function UserCart() {
     let totalPrice = 0
     lineItems.forEach(lineItem => totalPrice += lineItem.quantity * lineItem.bookItemModel.exportedPrice);
 
-    console.log(shipments)
+    console.log(information)
 
     useEffect(() => {
         const fetch = async () => {
@@ -61,6 +62,16 @@ function UserCart() {
             else toast.error(data);
         }
         fetchPayment();
+
+        const fetchInformation = async () => {
+            const respond = await InformationService.findAll();
+            const data = await respond.text();
+            if (respond.ok) {
+                setInformation(JSON.parse(data))
+            }
+            else toast.error(data);
+        }
+        fetchInformation();
 
 
     }, [refresh])
@@ -139,18 +150,18 @@ function UserCart() {
 
 
     return (
-        <div className="grid">
-            <div className="dataview-demo col-6">
+        <div className="grid justify-evenly">
+            <div className="dataview-demo col-7">
                 <div className="card"><DataView value={lineItems} layout="list" itemTemplate={LineItem} paginator rows={10} /></div>
             </div>
-            <div className="col-6">
-                Total: {totalPrice}
-                <span className="p-float-label my-10"> <InputText className="w-full" onChange={e => setInformation({ ...information, city: e.target.value })} /><label >city</label></span>
-                <span className="p-float-label my-10"> <InputText className="w-full" onChange={e => setInformation({ ...information, town: e.target.value })} /><label >town</label></span>
-                <span className="p-float-label my-10"> <InputText className="w-full" onChange={e => setInformation({ ...information, ward: e.target.value })} /><label >ward</label></span>
-                <span className="p-float-label my-10"> <InputText className="w-full" onChange={e => setInformation({ ...information, detailAddress: e.target.value })} /><label >detailAddress</label></span>
-                <span className="p-float-label my-10"> <InputText className="w-full" onChange={e => setInformation({ ...information, phoneNumber: e.target.value })} /><label >phoneNumber</label></span>
-                <span className="p-float-label my-10"> <InputText className="w-full" onChange={e => setInformation({ ...information, name: e.target.value })} /><label >name</label></span>
+            <div className="col-4">
+                <h1 className="text-center">Total: {totalPrice}</h1>
+                <span className="p-float-label my-10"> <InputText className="w-full" value={information.city} onChange={e => setInformation({ ...information, city: e.target.value })} /><label >city</label></span>
+                <span className="p-float-label my-10"> <InputText className="w-full" value={information.town} onChange={e => setInformation({ ...information, town: e.target.value })} /><label >town</label></span>
+                <span className="p-float-label my-10"> <InputText className="w-full" value={information.ward} onChange={e => setInformation({ ...information, ward: e.target.value })} /><label >ward</label></span>
+                <span className="p-float-label my-10"> <InputText className="w-full" value={information.detailAddress} onChange={e => setInformation({ ...information, detailAddress: e.target.value })} /><label >detailAddress</label></span>
+                <span className="p-float-label my-10"> <InputText className="w-full" value={information.phoneNumber} onChange={e => setInformation({ ...information, phoneNumber: e.target.value })} /><label >phoneNumber</label></span>
+                <span className="p-float-label my-10"> <InputText className="w-full" value={information.name} onChange={e => setInformation({ ...information, name: e.target.value })} /><label >name</label></span>
                 {shipments.length !== 0 &&
                     <span className="p-float-label my-10 h-10">
                         <Dropdown value={shipment} options={shipments}
@@ -164,7 +175,6 @@ function UserCart() {
 
                 <Button label='Pay' className="w-full h-20" onClick={e => setPaymentDialog(true)}></Button>
 
-                <h5>Responsive</h5>
                 <Dialog
                     header="Pay"
                     visible={paymentDialog}

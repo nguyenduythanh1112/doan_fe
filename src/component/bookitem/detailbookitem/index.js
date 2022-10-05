@@ -62,7 +62,7 @@ function DetailBookItem() {
                 <Panel className="my-2" header="Title" toggleable><p>{bookItem.bookModel.title}</p></Panel>
                 <Panel className="my-2" header="barcode" toggleable><p>{bookItem.barcode}</p></Panel>
             </div>
-            <div className="col-5">
+            <div className="col-7">
                 <Panel className="my-2" header="discount" toggleable><p>{bookItem.discount}</p></Panel>
                 <Panel className="my-2" header="summary" toggleable><p>{bookItem.bookModel.summary}</p></Panel>
                 <Panel className="my-2" header="file" toggleable><p>{bookItem.bookModel.file}</p></Panel>

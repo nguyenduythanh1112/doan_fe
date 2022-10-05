@@ -252,7 +252,7 @@ const UserBookItem = () => {
                         <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
                     </div>
                     <div className="product-grid-item-bottom ">
-                        <Button icon="pi pi-cart-plus"></Button>
+                        <Button icon="pi pi-cart-plus" onClick={() => handleSaveLineItem(bookItem.id)}></Button>
                         <Link to={`/bookitem/show/${bookItem.id}`} className="block"><Button className="p-button-outlined" icon="pi pi-plus-circle" /></Link>
                     </div>
                 </div >
