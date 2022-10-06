@@ -50,7 +50,7 @@ function UserNavigation() {
     }
     return (
         <div className="card bg-blue-600 ">
-            <Menubar model={items} className="bg-blue-600 rounded-none border-none shadow-md" />
+            <Menubar model={items} className="rounded-none border-none shadow-md" />
         </div>
     );
 }

@@ -37,3 +37,9 @@
     transform: rotate(360deg);
   }
 } */
+
+
+.dataview-demo .product-grid-item:hover {
+  background-color: rgb(226, 199, 164);
+  transition: color 3s ease-in-out;
+}

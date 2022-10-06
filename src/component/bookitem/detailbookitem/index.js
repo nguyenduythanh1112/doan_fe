@@ -5,6 +5,10 @@ import { Button } from 'primereact/button';
 import { UserInformation } from '../../../App';
 import * as BookItemService from '../../../service/BookItemService';
 import { toast } from 'react-toastify';
+import { Divider } from 'primereact/divider';
+import { ProgressBar } from 'primereact/progressbar';
+import { Rating } from 'primereact/rating';
+import './index.css';
 
 function DetailBookItem() {
 
@@ -52,18 +56,47 @@ function DetailBookItem() {
         });
     }, [])
 
+
+    const RenderGridItem = ({ bookItem }) => {
+        return (
+            <div className="col-12">
+                <div className="product-grid-item card w-4/5 justify-between flex flex-column m-auto my-3 shadow-xl h-max">
+                    <div className="product-grid-item-top">
+                        <div>
+                            <i className="pi pi-tag product-category-icon"></i>
+                            <span className="product-category">{bookItem.bookModel.category}</span>
+                        </div>
+                    </div>
+                    <div className="product-grid-item-content">
+                        <img className="flex m-auto my-3" src={bookItem.bookModel.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={bookItem.name} />
+                        <div className="product-name">{bookItem.bookModel.title}</div>
+                        <div className="product-description">{bookItem.bookModel.description}</div>
+                        <div className="product-price my-3">Price: {bookItem.exportedPrice}</div>
+                    </div>
+                    <div className='flex flex-column'>
+                        <ProgressBar value={50} className="m-2"></ProgressBar>
+                        <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
+                    </div>
+                    <div className="product-grid-item-bottom ">
+                        {userInformation.role === 'user' && <Button icon="pi pi-shopping-cart" label="Add to Cart" className="w-full"></Button>}
+                    </div>
+                </div >
+            </div >
+        );
+    }
+
     return (
         <div className="grid m-3 justify-center">
             <div className="col-4">
-                Book Item ID: {id}
-                <img src={bookItem.bookModel.image} className="w-full"></img>
-                <Panel className="my-2" header="exportedPrice" toggleable><p>{bookItem.exportedPrice}</p></Panel>
-                {userInformation.role === 'user' && <Button icon="pi pi-shopping-cart" label="Add to Cart" className="w-full"></Button>}
+                {/* <img src={bookItem.bookModel.image} className="w-full"></img> */}
+                {/* <Panel className="my-2" header="exportedPrice" toggleable><p>{bookItem.exportedPrice}</p></Panel>
                 <Panel className="my-2" header="Title" toggleable><p>{bookItem.bookModel.title}</p></Panel>
-                <Panel className="my-2" header="barcode" toggleable><p>{bookItem.barcode}</p></Panel>
+            <Panel className="my-2" header="barcode" toggleable><p>{bookItem.barcode}</p></Panel> */}
+                {bookItem && <RenderGridItem bookItem={bookItem}></RenderGridItem>}
+                {/* {userInformation.role === 'user' && <Button icon="pi pi-shopping-cart" label="Add to Cart" className="w-full"></Button>} */}
             </div>
-            <div className="col-7">
-                <Panel className="my-2" header="discount" toggleable><p>{bookItem.discount}</p></Panel>
+            <div className="col-5">
+                {/* <Panel className="my-2" header="discount" toggleable><p>{bookItem.discount}</p></Panel>
                 <Panel className="my-2" header="summary" toggleable><p>{bookItem.bookModel.summary}</p></Panel>
                 <Panel className="my-2" header="file" toggleable><p>{bookItem.bookModel.file}</p></Panel>
                 <Panel className="my-2" header="Other" toggleable>
@@ -73,7 +106,15 @@ function DetailBookItem() {
                     <p>publisher: {bookItem.bookModel.publisher}</p>
                     <p>author: {bookItem.bookModel.author}</p>
                     <p>category: {bookItem.bookModel.category}</p>
-                </Panel>
+                </Panel> */}
+                <Divider align="left" type="dashed"><b>barcode</b></Divider><div className="text-center">{bookItem.barcode}</div>
+                <Divider align="left" type="dashed"><b>numberOfPage</b></Divider><div className="text-center">{bookItem.bookModel.numberOfPage}</div>
+                <Divider align="left" type="dashed"><b>language</b></Divider><div className="text-center">{bookItem.bookModel.language}</div>
+                <Divider align="left" type="dashed"><b>publisher</b></Divider><div className="text-center">{bookItem.bookModel.publisher}</div>
+                <Divider align="left" type="dashed"><b>author</b></Divider><div className="text-center">{bookItem.bookModel.author}</div>
+                <Divider align="left" type="dashed"><b>category</b></Divider><div className="text-center">{bookItem.bookModel.category}</div>
+                <Divider align="left" type="dashed"><b>summary</b></Divider><div className="text-center">{bookItem.bookModel.summary}</div>
+                <Divider align="left" type="dashed"><b>discount</b></Divider><div className="text-center">{bookItem.discount}</div>
             </div>
             {
                 userInformation.role !== 'user' &&
@@ -89,7 +130,7 @@ function DetailBookItem() {
                     </Panel>
                 </div>
             }
-        </div >
+        </div>
     );
 }
 

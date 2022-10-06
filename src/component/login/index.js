@@ -67,6 +67,8 @@ function Login() {
                 <label>Password</label>
             </span>
             <Button onClick={handleLogin} label="Login" className="p-button-raised p-button-text" />
+            <Button label="Login with google" className="p-button-raised p-button-text" />
+            <Button label="Login with facebook" className="p-button-raised p-button-text" />
 
         </div>
     );

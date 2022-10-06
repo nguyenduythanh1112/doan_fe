@@ -56,8 +56,8 @@ function AdminNavigation() {
         )
     }
     return (
-        <div className="card">
-            <Menubar model={items} />
+        <div className="card bg-blue-600">
+            <Menubar model={items} className="bg-blue-600 rounded-none border-none shadow-md" />
         </div>
     );
 }

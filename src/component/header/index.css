@@ -6,10 +6,22 @@
     color: white !important;
 }
 
+
+.p-menuitem-link:hover {
+    line-height: 100%;
+    border-radius: 0;
+}
+
 .p-menuitem-link:hover>.p-menuitem-text {
     color: rgb(0, 0, 0) !important;
 }
 
 .p-menuitem-link:hover>.p-menuitem-icon {
     color: rgb(0, 0, 0) !important;
+}
+
+.p-menubar {
+    display: flex;
+    align-items: center;
+    background-color: #1a334c !important;
 }

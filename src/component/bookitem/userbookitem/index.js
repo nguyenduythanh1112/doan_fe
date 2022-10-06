@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { Rating } from 'primereact/rating';
 import { Carousel } from 'primereact/carousel';
 import * as LineItemService from '../../../service/LineItemService';
+import { Tooltip } from 'primereact/tooltip';
 
 const UserBookItem = () => {
     const [products, setProducts] = useState([]);
@@ -223,8 +224,8 @@ const UserBookItem = () => {
                         <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
                     </div>
                     <div className="product-grid-item-bottom ">
-                        <Button icon="pi pi-cart-plus" onClick={() => handleSaveLineItem(bookItem.id)}></Button>
-                        <Link to={`/bookitem/show/${bookItem.id}`} className="block"><Button className="p-button-outlined" icon="pi pi-plus-circle" /></Link>
+                        <Button icon="pi pi-cart-plus" tooltip="Add to Cart" tooltipOptions={{ className: 'cyan-tooltip', position: 'bottom' }} onClick={() => handleSaveLineItem(bookItem.id)}></Button>
+                        <Link to={`/bookitem/show/${bookItem.id}`} className="block"><Button tooltip="More" tooltipOptions={{ className: 'cyan-tooltip', position: 'bottom' }} className="p-button-outlined" icon="pi pi-plus-circle" /></Link>
                     </div>
                 </div >
             </div >
@@ -252,8 +253,8 @@ const UserBookItem = () => {
                         <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
                     </div>
                     <div className="product-grid-item-bottom ">
-                        <Button icon="pi pi-cart-plus" onClick={() => handleSaveLineItem(bookItem.id)}></Button>
-                        <Link to={`/bookitem/show/${bookItem.id}`} className="block"><Button className="p-button-outlined" icon="pi pi-plus-circle" /></Link>
+                        <Button icon="pi pi-cart-plus" tooltip="Add to Cart" tooltipOptions={{ className: 'cyan-tooltip', position: 'bottom' }} onClick={() => handleSaveLineItem(bookItem.id)}></Button>
+                        <Link to={`/bookitem/show/${bookItem.id}`} className="block"><Button tooltip="More" tooltipOptions={{ className: 'cyan-tooltip', position: 'bottom' }} className="p-button-outlined" icon="pi pi-plus-circle" /></Link>
                     </div>
                 </div >
             </div >
