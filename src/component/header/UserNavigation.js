@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { UserInformation } from '../../App';
 import { useContext } from 'react';
 import { Menubar } from 'primereact/menubar';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
 function UserNavigation() {
     const { userInformation } = useContext(UserInformation);
 
@@ -50,6 +52,12 @@ function UserNavigation() {
     }
     return (
         <div className="card bg-blue-600 ">
+            <div className="col-12 md:col-4 flex m-auto">
+                <div className="p-inputgroup">
+                    <InputText placeholder="Keyword" />
+                    <Button icon="pi pi-search" className="p-button-warning" />
+                </div>
+            </div>
             <Menubar model={items} className="rounded-none border-none shadow-md" />
         </div>
     );

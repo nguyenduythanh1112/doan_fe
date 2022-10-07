@@ -206,7 +206,7 @@ const UserBookItem = () => {
     const renderGridItem = (bookItem) => {
         return (
             <div className="col-12 md:col-4">
-                <div className="product-grid-item card w-4/5 justify-between flex flex-column m-auto my-3 shadow-xl h-max">
+                <div className="product-grid-item card w-4/5 justify-between flex flex-column m-auto my-3 shadow-xl h-max hover:opacity-08 transition duration-900 ease-in-out">
                     <div className="product-grid-item-top">
                         <div>
                             <i className="pi pi-tag product-category-icon"></i>
