@@ -24,10 +24,6 @@ function AdminNavigation() {
             label: <Link to="/adminorder">Order</Link>,
             icon: 'pi pi-calculator',
         },
-        {
-            label: <Link to="/admincart">Cart</Link>,
-            icon: 'pi pi-shopping-cart',
-        },
 
     ];
 
@@ -37,18 +33,10 @@ function AdminNavigation() {
                 label: <Link to="/login">Login</Link>,
                 icon: 'pi pi-user',
             },
-            {
-                label: <Link to="/register">Register</Link>,
-                icon: 'pi pi-user',
-            },
         )
     }
     else {
         items.push(
-            {
-                label: <Link to="/">User</Link>,
-                icon: 'pi pi-user',
-            },
             {
                 label: <Link to="/logout">Logout</Link>,
                 icon: 'pi pi-fw pi-power-off',

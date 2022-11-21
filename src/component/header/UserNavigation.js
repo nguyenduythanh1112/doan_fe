@@ -52,12 +52,12 @@ function UserNavigation() {
     }
     return (
         <div className="card bg-blue-600 ">
-            <div className="col-12 md:col-4 flex m-auto">
+            {/* <div className="col-12 md:col-4 flex m-auto">
                 <div className="p-inputgroup">
                     <InputText placeholder="Keyword" />
                     <Button icon="pi pi-search" className="p-button-warning" />
                 </div>
-            </div>
+            </div> */}
             <Menubar model={items} className="rounded-none border-none shadow-md" />
         </div>
     );
