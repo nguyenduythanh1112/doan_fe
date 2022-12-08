@@ -9,11 +9,11 @@ function UserNavigation() {
 
     const items = [
         {
-            label: <Link to="/">User Home</Link>,
+            label: <Link to="/">Home</Link>,
             icon: 'pi pi-home',
         },
         {
-            label: <Link to="/bookitem">Book Item</Link>,
+            label: <Link to="/bookitem">Book</Link>,
             icon: 'pi pi-book',
         },
         {

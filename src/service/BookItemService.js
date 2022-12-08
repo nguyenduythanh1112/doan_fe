@@ -36,6 +36,20 @@ function save(bookItem, bookId) {
     return fetch("http://localhost:8080/api/bookitem", requestOptions);
 }
 
+function deleteById(id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", accessToken);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("id", id);
+    var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: urlencoded,
+    };
+    return fetch("http://localhost:8080/api/bookitem", requestOptions);
+}
 
 
-export { findAll, findById, save }
+
+export { findAll, findById, save ,deleteById}

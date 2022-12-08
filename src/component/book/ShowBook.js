@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import * as BookService from '../../service/BookService';
 import './index.css';
 import { Link } from 'react-router-dom';
+import { async } from '@firebase/util';
 
 const ShowBook = () => {
 
@@ -44,8 +45,17 @@ const ShowBook = () => {
     const exportCSV = () => { dt.current.exportCSV(); }
     const leftToolbar = () => <Link to="/book/save"><Button label="New Book" icon="pi pi-plus" className="p-button-success mr-2" /></Link>
     const imageBody = (rowData) => <img src={rowData.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={rowData.image} className="product-image h-12 w-auto" />
-    const deleteProduct = () => {
-        toast.success("Load book success: " + bookId)
+    
+    
+    const deleteProduct =async () => {
+        const respond = await BookService.deleteById(bookId);
+        if(respond.ok){
+            toast.success("Delete success: " + bookId);
+            setRefresh(!refresh);
+        }
+        else toast.error("Delete error "+bookId);
+        setDeleteBookDialog(false);
+        
     }
 
     const rightToolbar = (
@@ -116,7 +126,7 @@ const ShowBook = () => {
                 onHide={hideDeleteBookDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    <span>Are you sure you want to delete</span>
+                    <span>Are you sure you want to delete BOOK ID: {bookId}</span>
                 </div>
             </Dialog>
         </div>

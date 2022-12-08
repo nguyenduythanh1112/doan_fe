@@ -17,6 +17,7 @@ import Home from './component/home';
 import Cart from './component/cart';
 import UserOrder from './component/order/UserOrder';
 import AdminOrder from './component/order/AdminOrder';
+import Order from './component/order';
 export const UserInformation = createContext();
 
 function App() {
@@ -54,7 +55,7 @@ function App() {
               <Route path="/cart/show" element={<Cart />} />
 
               <Route path="/announcepayonline" element={<AnnouncementOrder />} />
-              <Route path="/order" element={<AdminOrder />} />
+              <Route path="/order" element={<Order />} />
 
             </Routes>
           </div>

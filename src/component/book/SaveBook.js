@@ -71,9 +71,9 @@ function SaveBook() {
 
 
     return (
-        <div className="grid justify-between">
-            {book.id && <h5 className="col-12">You are editing book. ID is {book.id}</h5>}
-            <div className="col-5">
+        <div className="grid justify-center capitalize">
+            {book.id && <h5 className="col-12 grid justify-center text-lg uppercase">You are editing book. ID is {book.id}</h5>}
+            <div className="col-6">
                 <span className="p-float-label my-4"><InputText className="w-full" value={book.title} onChange={e => setBook({ ...book, title: e.target.value })} /><label>title</label></span>
                 <span className="p-float-label my-4"><InputTextarea className="w-full" value={book.summary} onChange={e => setBook({ ...book, summary: e.target.value })} /><label>summary</label></span>
                 <span className="p-float-label my-4"><InputText className="w-full" value={book.language} onChange={e => setBook({ ...book, language: e.target.value })} /><label>language</label></span>
@@ -103,25 +103,25 @@ function SaveBook() {
                 }
                 <span className="p-float-label my-4"><InputTextarea className="w-full" value={book.description} onChange={e => setBook({ ...book, description: e.target.value })} /><label>description</label></span>
             </div>
-            <div className="col-5">
+            <div className="col-4">
                 {book.image && <img className="" src={book.image} className="product-image w-full my-4" />}
                 <div className="grid justify-between">
                     <span className="p-float-label my-4 col-3"><InputText className="w-full" value={book.height} onChange={e => setBook({ ...book, height: e.target.value })} /><label>height</label></span>
                     <span className="p-float-label my-4 col-3"><InputText className="w-full" value={book.weight} onChange={e => setBook({ ...book, weight: e.target.value })} /><label>weight</label></span>
                     <span className="p-float-label my-4 col-3"><InputText className="w-full" value={book.longs} onChange={e => setBook({ ...book, longs: e.target.value })} /><label>longs</label></span>
-                    <span className="p-float-label my-4 col-3"><InputText className="w-full" value={book.numberOfPage} onChange={e => setBook({ ...book, numberOfPage: e.target.value })} /><label>numberOfPage</label></span>
+                    <span className="p-float-label my-4 col-3"><InputText className="w-full" value={book.numberOfPage} onChange={e => setBook({ ...book, numberOfPage: e.target.value })} /><label>number Page</label></span>
                 </div>
                 <div className="grid justify-between">
-                    <span className="p-float-label my-4 col-4"><InputText className="w-full" value={book.importedPrice} onChange={e => setBook({ ...book, importedPrice: e.target.value })} /><label>importedPrice</label></span>
-                    <span className="p-float-label my-4 col-4"><InputText className="w-full" value={book.importedQuantity} onChange={e => setBook({ ...book, importedQuantity: e.target.value })} /><label>importedQuantity</label></span>
-                    <span className="p-float-label my-4 col-4"><InputText className="w-full" value={book.exportedQuantity} onChange={e => setBook({ ...book, exportedQuantity: e.target.value })} /><label>exportedQuantity</label></span>
+                    <span className="p-float-label my-4 col-4"><InputText className="w-full" value={book.importedPrice} onChange={e => setBook({ ...book, importedPrice: e.target.value })} /><label>imported Price</label></span>
+                    <span className="p-float-label my-4 col-4"><InputText className="w-full" value={book.importedQuantity} onChange={e => setBook({ ...book, importedQuantity: e.target.value })} /><label>imported Quantity</label></span>
+                    <span className="p-float-label my-4 col-4"><InputText className="w-full" value={book.exportedQuantity} onChange={e => setBook({ ...book, exportedQuantity: e.target.value })} /><label>exported Quantity</label></span>
                 </div>
                 <span className="p-float-label my-4"><InputText className="w-full" value={book.publisher} onChange={e => setBook({ ...book, publisher: e.target.value })} /><label>publisher</label></span>
                 <span className="p-float-label my-4"><InputText className="w-full" value={book.author} onChange={e => setBook({ ...book, author: e.target.value })} /><label>author</label></span>
                 <span className="p-float-label my-4"><InputTextarea className="w-full" value={book.category} onChange={e => setBook({ ...book, category: e.target.value })} /><label>category</label></span>
             </div>
 
-            <div className="grid justify-between col-12">
+            <div className="grid justify-between col-6">
                 <Button label="Add" onClick={handleSaveBook} className="col-6 h-12 my-4 p-button-outlined p-button-success"></Button>
                 <Button label="Refresh" onClick={e => setRefresh(!refresh)} className="col-3 h-12 my-4 p-button-outlined p-button-warning"></Button>
                 <Button label="Cancel" className="col-2 h-12 my-4 p-button-outlined p-button-danger"></Button>

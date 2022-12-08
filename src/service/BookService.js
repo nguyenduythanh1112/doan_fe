@@ -60,5 +60,23 @@ function findNotPostedBook() {
     return fetch(`http://localhost:8080/api/book/notpostedbook`, requestOptions);
 }
 
+function deleteById(id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", accessToken);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-export { save, findAll, findById, findNotPostedBook }
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("id", id);
+
+    var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+    };
+
+    return fetch("http://localhost:8080/api/book", requestOptions);
+}
+
+
+export { save, findAll, findById, findNotPostedBook ,deleteById}

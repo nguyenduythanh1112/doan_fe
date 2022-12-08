@@ -21,7 +21,7 @@ function AdminNavigation() {
             icon: 'pi pi-table',
         },
         {
-            label: <Link to="/adminorder">Order</Link>,
+            label: <Link to="/order">Order</Link>,
             icon: 'pi pi-calculator',
         },
 

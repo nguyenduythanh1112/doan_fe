@@ -136,7 +136,7 @@ function UserCart() {
                         </div>
                     </div>
                     <div className="product-list-action">
-                        <span className="product-price">${lineItem.bookItemModel.exportedPrice}</span>
+                        <span className="product-price">{lineItem.bookItemModel.exportedPrice} VND</span>
                         <Link to={`/bookitem/show/${lineItem.bookItemModel.id}`} className="block w-full">
                             <Button label='More' className="p-button-outlined p-button-info w-full"></Button>
                         </Link>
@@ -150,17 +150,17 @@ function UserCart() {
 
 
     return (
-        <div className="grid justify-evenly">
+        <div className="grid justify-evenly capitalize">
             <div className="dataview-demo col-7">
                 <div className="card"><DataView value={lineItems} layout="list" itemTemplate={LineItem} paginator rows={10} /></div>
             </div>
             <div className="col-4">
-                <h1 className="text-center">Total: {totalPrice}</h1>
+                <h1 className="text-center uppercase text-2xl font-bold">Total: {totalPrice}</h1>
                 <span className="p-float-label my-10"> <InputText className="w-full" value={information.city} onChange={e => setInformation({ ...information, city: e.target.value })} /><label >city</label></span>
                 <span className="p-float-label my-10"> <InputText className="w-full" value={information.town} onChange={e => setInformation({ ...information, town: e.target.value })} /><label >town</label></span>
                 <span className="p-float-label my-10"> <InputText className="w-full" value={information.ward} onChange={e => setInformation({ ...information, ward: e.target.value })} /><label >ward</label></span>
-                <span className="p-float-label my-10"> <InputText className="w-full" value={information.detailAddress} onChange={e => setInformation({ ...information, detailAddress: e.target.value })} /><label >detailAddress</label></span>
-                <span className="p-float-label my-10"> <InputText className="w-full" value={information.phoneNumber} onChange={e => setInformation({ ...information, phoneNumber: e.target.value })} /><label >phoneNumber</label></span>
+                <span className="p-float-label my-10"> <InputText className="w-full" value={information.detailAddress} onChange={e => setInformation({ ...information, detailAddress: e.target.value })} /><label >detail Address</label></span>
+                <span className="p-float-label my-10"> <InputText className="w-full" value={information.phoneNumber} onChange={e => setInformation({ ...information, phoneNumber: e.target.value })} /><label >phone Number</label></span>
                 <span className="p-float-label my-10"> <InputText className="w-full" value={information.name} onChange={e => setInformation({ ...information, name: e.target.value })} /><label >name</label></span>
                 {shipments.length !== 0 &&
                     <span className="p-float-label my-10 h-10">

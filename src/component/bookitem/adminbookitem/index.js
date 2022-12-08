@@ -118,12 +118,14 @@ const AdminBookItem = () => {
         setDeleteProductDialog(true);
     }
 
-    const deleteProduct = () => {
-        let _products = products.filter(val => val.id !== product.id);
-        setProducts(_products);
+    const deleteProduct = async () => {
+        const respond = await BookItemService.deleteById(product.id);
+        if(respond.ok){
+            toast.success("Delete success: " + product.id);
+            setRefresh(!refresh);
+        }
+        else toast.error("Delete error "+product.id);
         setDeleteProductDialog(false);
-        setProduct(emptyProduct);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     }
 
     const exportCSV = () => { dt.current.exportCSV(); }
@@ -205,7 +207,7 @@ const AdminBookItem = () => {
                     <Column field="discount" header="discount" sortable ></Column>
                     <Column field="status" header="status" sortable ></Column>
                     <Column field="bookModel.image" header="image" sortable body={imageBodyTemplate}></Column>
-                    <Column field="bookModel.summary" header="summary" sortable ></Column>
+                    <Column field="bookModel.summary" header="summary" sortable style={{ minWidth: '25rem' }}></Column>
                     <Column field="bookModel.title" header="title" sortable ></Column>
                     <Column field="bookModel.numberOfPage" header="numberOfPage" sortable ></Column>
                     <Column field="bookModel.language" header="language" sortable ></Column>
@@ -243,7 +245,7 @@ const AdminBookItem = () => {
                 onHide={hideDeleteProductDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && <span>Are you sure you want to delete <b>{product.name}</b>?</span>}
+                    {product && <span>Are you sure you want to delete BOOK ITEM: {product.id} <b>{product.name}</b>?</span>}
                 </div>
             </Dialog>
 
