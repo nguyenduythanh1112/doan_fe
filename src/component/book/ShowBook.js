@@ -32,7 +32,7 @@ const ShowBook = () => {
             })
         }).then(result => {
             setBooks(JSON.parse(result));
-            toast.success("Load book success")
+            // toast.success("Load book success")
         }).catch(error => {
             toast.error("Load book error")
         });

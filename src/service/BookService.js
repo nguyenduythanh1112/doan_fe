@@ -20,6 +20,9 @@ async function save(book) {
     urlencoded.append("publisher", book.publisher);
     urlencoded.append("author", book.author);
     urlencoded.append("category", book.category);
+    urlencoded.append("height", book.height);
+    urlencoded.append("weight", book.weight);
+    urlencoded.append("longs", book.longs);
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,

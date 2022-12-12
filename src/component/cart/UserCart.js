@@ -120,6 +120,7 @@ function UserCart() {
     }
 
     const LineItem = (lineItem) => {
+        console.log(lineItem)
         return (
             <div className="col-12">
                 <div className="product-list-item">

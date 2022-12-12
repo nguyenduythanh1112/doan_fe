@@ -3,6 +3,7 @@ import { UserInformation } from '../../App';
 import { decodeToken } from 'react-jwt';
 import { AutoComplete } from 'primereact/autocomplete';
 import { Button } from 'primereact/button';
+import { toast } from 'react-toastify';
 
 function Login() {
 
@@ -42,10 +43,11 @@ function Login() {
                 const payload = decodeToken(accessToken);
                 setUserInformation({ ...userInformation, isLogin: true, accessToken: accessToken, role: payload.role })
                 localStorage.setItem("bookstoretoken", result);
-                alert("success")
+                toast.success("Đăng nhập thành công");
+                window.location.replace("http://localhost:3000/bookitem")
             })
             .catch(error => {
-                console.log('error', error);
+                toast.error("Đăng nhập thất bại");
                 alert("error")
             });
     }

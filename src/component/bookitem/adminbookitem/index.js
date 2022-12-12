@@ -58,7 +58,7 @@ const AdminBookItem = () => {
             })
         }).then(result => {
             setProducts(JSON.parse(result));
-            toast.success("Load book item success")
+            // toast.success("Load book item success")
         }).catch(error => {
             toast.error("Load book item error")
         });
@@ -70,7 +70,7 @@ const AdminBookItem = () => {
             })
         }).then(result => {
             setPostedBooks(JSON.parse(result));
-            toast.success("Load not posted book item success")
+            // toast.success("Load not posted book item success")
         }).catch(error => {
             toast.error("Load not posted book item error")
         });
@@ -93,7 +93,7 @@ const AdminBookItem = () => {
 
 
     const saveProduct = async () => {
-        console.log(product)
+        // console.log(product)
         BookItemService.save(product, product.bookModel.id).then(response => {
             return new Promise((resolve, reject) => {
                 if (response.ok) resolve(response.text());
@@ -109,6 +109,7 @@ const AdminBookItem = () => {
     }
 
     const editProduct = (product) => {
+        console.log(product)
         setProduct({ ...product });
         setProductDialog(true);
     }

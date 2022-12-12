@@ -8,6 +8,17 @@ function findAll() {
     };
     return fetch("http://localhost:8080/api/bookitem", requestOptions)
 }
+
+function bookItemPublic() {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", accessToken);
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+    };
+    return fetch("http://localhost:8080/api/bookitem/public", requestOptions)
+}
+
 function findById(id) {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", accessToken);
@@ -18,6 +29,9 @@ function findById(id) {
     return fetch(`http://localhost:8080/api/bookitem/${id}`, requestOptions)
 }
 function save(bookItem, bookId) {
+
+    console.log(bookItem,bookId)
+
     var myHeaders = new Headers();
     myHeaders.append("Authorization", accessToken);
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -52,4 +66,4 @@ function deleteById(id) {
 
 
 
-export { findAll, findById, save ,deleteById}
+export { findAll, findById, save ,deleteById,bookItemPublic}

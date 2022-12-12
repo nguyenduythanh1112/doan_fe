@@ -95,7 +95,7 @@ function DetailBookItem() {
                 {bookItem && <RenderGridItem bookItem={bookItem}></RenderGridItem>}
                 {/* {userInformation.role === 'user' && <Button icon="pi pi-shopping-cart" label="Add to Cart" className="w-full"></Button>} */}
             </div>
-            <div className="col-5">
+            <div className="col-5 capitalize">
                 {/* <Panel className="my-2" header="discount" toggleable><p>{bookItem.discount}</p></Panel>
                 <Panel className="my-2" header="summary" toggleable><p>{bookItem.bookModel.summary}</p></Panel>
                 <Panel className="my-2" header="file" toggleable><p>{bookItem.bookModel.file}</p></Panel>
@@ -108,7 +108,7 @@ function DetailBookItem() {
                     <p>category: {bookItem.bookModel.category}</p>
                 </Panel> */}
                 <Divider align="left" type="dashed"><b>barcode</b></Divider><div className="text-center">{bookItem.barcode}</div>
-                <Divider align="left" type="dashed"><b>numberOfPage</b></Divider><div className="text-center">{bookItem.bookModel.numberOfPage}</div>
+                <Divider align="left" type="dashed"><b>number Of Page</b></Divider><div className="text-center">{bookItem.bookModel.numberOfPage}</div>
                 <Divider align="left" type="dashed"><b>language</b></Divider><div className="text-center">{bookItem.bookModel.language}</div>
                 <Divider align="left" type="dashed"><b>publisher</b></Divider><div className="text-center">{bookItem.bookModel.publisher}</div>
                 <Divider align="left" type="dashed"><b>author</b></Divider><div className="text-center">{bookItem.bookModel.author}</div>
