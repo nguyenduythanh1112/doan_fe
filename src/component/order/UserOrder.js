@@ -29,6 +29,7 @@ const UserOrder=()=>{
                     <Column field="date" header="Date"></Column>
                     <Column field="status" header="Status"></Column>
                     <Column field="totalPrice" header="Total Price"></Column>
+                    <Column field="informationToShip" header="Information To Ship"></Column>
                 </DataTable>
             </div>
         </div>

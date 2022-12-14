@@ -74,7 +74,7 @@ function DetailBookItem() {
                         <div className="product-price my-3">Price: {bookItem.exportedPrice}</div>
                     </div>
                     <div className='flex flex-column'>
-                        <ProgressBar value={50} className="m-2"></ProgressBar>
+                        <ProgressBar value={bookItem.bookModel.exportedQuantity/bookItem.bookModel.importedQuantity*100} className="m-2"></ProgressBar>
                         <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
                     </div>
                     <div className="product-grid-item-bottom ">

@@ -36,7 +36,7 @@ function UserCart() {
             const respond = await CartService.findByUsername();
             const data = await respond.text();
             if (respond.ok) {
-                toast.success("Fetch Cart OK: ");
+                // toast.success("Fetch Cart OK: ");
                 setLineItems(JSON.parse(data));
             }
             else toast.error(data);
@@ -80,7 +80,7 @@ function UserCart() {
         const respond = await LineItemService.add(bookItemId);
         const data = await respond.text();
         if (respond.ok) {
-            toast.success("Line item: " + JSON.parse(data).id);
+            toast.success("Add success");
             setRefresh(!refresh);
         }
         else toast.error(data);
@@ -91,7 +91,7 @@ function UserCart() {
         const respond = await LineItemService.subtract(bookItemId);
         const data = await respond.text();
         if (respond.ok) {
-            toast.success("Line item: " + JSON.parse(data).id);
+            toast.success("Subtract success");
             setRefresh(!refresh)
         }
         else toast.error(data);
