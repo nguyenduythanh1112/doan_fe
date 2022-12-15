@@ -15,9 +15,10 @@ import * as ShipmentService from '../../service/ShipmentService';
 import * as PaymentService from '../../service/PaymentService';
 import * as OrderService from '../../service/OrderService';
 import * as InformationService from '../../service/InformationService';
+import { useNavigate } from 'react-router-dom';
 
 function UserCart() {
-
+    const navigate = useNavigate();
     const [lineItems, setLineItems] = useState([]);
     const [refresh, setRefresh] = useState(true);
     const [shipments, setShipments] = useState([]);
@@ -27,7 +28,7 @@ function UserCart() {
     const [paymentDialog, setPaymentDialog] = useState(false);
     const [information, setInformation] = useState({ city: "", town: "", ward: "", detailAddress: "", phoneNumber: "", name: "", })
     let totalPrice = 0
-    lineItems.forEach(lineItem => totalPrice += lineItem.quantity * lineItem.bookItemModel.exportedPrice);
+    lineItems.forEach(lineItem => totalPrice += lineItem.quantity * lineItem.bookItemModel.exportedPrice * (1 - lineItem.bookItemModel.discount / 100));
 
     console.log(information)
 
@@ -110,11 +111,25 @@ function UserCart() {
     }
 
     const handleOrder = async () => {
+
+        if (!shipment.id) {
+            toast.error("Bạn cần chọn hình thức vận chuyển")
+            return;
+        }
+        if (!payment.id) {
+            toast.error("Bạn cần chọn hình thức thanh toán")
+            return;
+        }
+
         const respond = await OrderService.create(payment.id, shipment.id, information);
         const data = await respond.text();
         if (respond.ok) {
             const order = JSON.parse(data);
             if (order.urlToPay) window.location.replace(order.urlToPay)
+            else {
+                navigate("/order");
+                toast.success("Đặt hàng thành công");
+            }
         }
         else toast.error(data);
     }
@@ -133,11 +148,13 @@ function UserCart() {
                             <Button label="+" className="p-button-raised p-button-info p-button-text col-1" onClick={e => handleAdd(lineItem.bookItemModel.id)} />
                             <h1 className='mx-2 flex justify-center col-3 text-center product-category'>{lineItem.quantity}</h1>
                             <Button label="-" className="p-button-raised p-button-info p-button-text col-1" onClick={e => handleSubtract(lineItem.bookItemModel.id)} />
-                            <h1 className='mx-2 flex justify-center col-5 text-center product-category'>Total: {lineItem.quantity * lineItem.bookItemModel.exportedPrice}</h1>
+                            <h1 className='mx-2 flex justify-center col-5 text-center product-category'>Total: {lineItem.quantity * lineItem.bookItemModel.exportedPrice} </h1>
                         </div>
                     </div>
                     <div className="product-list-action">
-                        <span className="product-price">{lineItem.bookItemModel.exportedPrice} VND</span>
+                        {/* <span className="product-price">{lineItem.bookItemModel.exportedPrice} VND</span> */}
+                        {/* <div className="text-lg">Giá bìa: {lineItem.bookItemModel.exportedPrice} VND </div> */}
+                        <div className="product-price my-3">{lineItem.bookItemModel.exportedPrice * (1 - lineItem.bookItemModel.discount / 100)} VND </div>
                         <Link to={`/bookitem/show/${lineItem.bookItemModel.id}`} className="block w-full">
                             <Button label='More' className="p-button-outlined p-button-info w-full"></Button>
                         </Link>
@@ -156,7 +173,7 @@ function UserCart() {
                 <div className="card"><DataView value={lineItems} layout="list" itemTemplate={LineItem} paginator rows={10} /></div>
             </div>
             <div className="col-4">
-                <h1 className="text-center uppercase text-2xl font-bold">Total: {totalPrice}</h1>
+                <h1 className="text-center uppercase text-2xl font-bold">Thông tin vận chuyển</h1>
                 <span className="p-float-label my-10"> <InputText className="w-full" value={information.city} onChange={e => setInformation({ ...information, city: e.target.value })} /><label >city</label></span>
                 <span className="p-float-label my-10"> <InputText className="w-full" value={information.town} onChange={e => setInformation({ ...information, town: e.target.value })} /><label >town</label></span>
                 <span className="p-float-label my-10"> <InputText className="w-full" value={information.ward} onChange={e => setInformation({ ...information, ward: e.target.value })} /><label >ward</label></span>
@@ -173,11 +190,13 @@ function UserCart() {
                             className="w-full h-full" />
                         <label>Shipment</label>
                     </span>}
-
-                <Button label='Pay' className="w-full h-20" onClick={e => setPaymentDialog(true)}></Button>
+                <h1 className="text-left text-xl"> book: {totalPrice} VND </h1>
+                <h1 className="text-left text-xl "> shipment: {shipment.amount || "bạn chưa chọn hình thức vận chuyển"} VND </h1>
+                <h1 className="text-left uppercase text-2xl font-bold mb-5">Total: {totalPrice + shipment.amount || 0} VND </h1>
+                <Button label='Thanh toán' className="w-full h-20" onClick={e => setPaymentDialog(true)}></Button>
 
                 <Dialog
-                    header="Pay"
+                    header="Thanh toán"
                     visible={paymentDialog}
                     onHide={() => setPaymentDialog(false)}
                     breakpoints={{ '960px': '75vw' }}
@@ -186,7 +205,8 @@ function UserCart() {
                         <Button label="No" icon="pi pi-times" onClick={() => setPaymentDialog(false)} className="p-button-text" />
                         <Button label="Yes" icon="pi pi-check" autoFocus onClick={e => handleOrder()} />
                     </div>}>
-
+                    <h1 className="text-center uppercase text-2xl font-bold">Phí sách và vận chuyển: {totalPrice + shipment.amount || 0} VND </h1>
+                    {payment.amount >= 0 ? <h1 className="text-center  text-2xl ">Phí hình thức thanh toán: {payment.amount} VND</h1> : "Bạn cần chọn hình thức thanh toán"}
                     {payments.length !== 0 &&
                         <span className="p-float-label my-10 h-10">
                             <Dropdown value={payment} options={payments}

@@ -8,10 +8,10 @@ function AdminNavigation() {
     const { userInformation } = useContext(UserInformation);
 
     const items = [
-        {
-            label: <Link to="/">Admin Home</Link>,
-            icon: 'pi pi-home',
-        },
+        // {
+        //     label: <Link to="/">Admin Home</Link>,
+        //     icon: 'pi pi-home',
+        // },
         {
             label: <Link to="/book">Book</Link>,
             icon: 'pi pi-book',

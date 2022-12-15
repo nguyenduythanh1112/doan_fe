@@ -38,7 +38,7 @@ function App() {
           <Header></Header>
           <div className="my-2">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<BookItem />} />
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/register" element={<Register />} />

@@ -3,38 +3,38 @@ import * as OrderService from "../../service/OrderService"
 import { toast } from 'react-toastify';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import {Button} from "primereact/button"
-const AdminOrder=()=>{
+import { Button } from "primereact/button"
+const AdminOrder = () => {
 
-    const [orders,setOrders]=useState([]);
-    const [order,setOrder]=useState([]);
+    const [orders, setOrders] = useState([]);
+    const [order, setOrder] = useState([]);
     let status;
     let id;
 
-    useEffect(()=>{
+    useEffect(() => {
         const fetch = async () => {
             const respond = await OrderService.findAll();
             const data = await respond.text();
             if (respond.ok) {
-                toast.success("Fetch OK ");
+                // toast.success("Fetch OK ");
                 setOrders(JSON.parse(data));
             }
             else toast.error(data);
         }
         fetch()
-    },[])
+    }, [])
 
 
-    const handleOnChange=(rowData, e)=>{
-        id=rowData.id;
-        status=e.target.value;
-        console.log(id,status)
+    const handleOnChange = (rowData, e) => {
+        id = rowData.id;
+        status = e.target.value;
+        console.log(id, status)
     }
 
 
-    const handleClick=async(rowData)=>{
-        if(rowData.id==id){
-            const respond = await OrderService.saveOrderById(id,status);
+    const handleClick = async (rowData) => {
+        if (rowData.id == id) {
+            const respond = await OrderService.saveOrderById(id, status);
             // const data = await respond.text();
             if (respond.ok) toast.success("Save success");
             else toast.error("Save error");
@@ -43,29 +43,30 @@ const AdminOrder=()=>{
     }
 
 
-    const bodyAction=(rowData)=>{
-        return(
+    const bodyAction = (rowData) => {
+        return (
             <div>
-                <Button icon="pi pi-save" className="p-button-rounded p-button-success mr-2" onClick={e=>handleClick(rowData)}/>
+                <Button icon="pi pi-save" className="p-button-rounded p-button-success mr-2" onClick={e => handleClick(rowData)} />
             </div>
         )
     }
 
-    const bodyStatus=(rowData)=>{
-        return(
+    const bodyStatus = (rowData) => {
+        return (
             <div className="h-10">
-                <select className="w-full h-10" onChange={e=>handleOnChange(rowData,e)}>
+                <select className="w-full h-10" onChange={e => handleOnChange(rowData, e)}>
                     <option value={rowData.status}>{rowData.status} - Default</option>
-                    <option value="yes">yes</option>
-                    <option value="no">no</option>
-                    <option value="pending">pending</option>
+                    <option value="Da huy don hang boi nha cung cap">Da huy don hang boi nha cung cap</option>
+                    <option value="Da huy don hang boi nha khach hang">Da huy don hang boi nha khach hang</option>
+                    <option value="Dang van chuyen">Dang van chuyen</option>
+                    <option value="Dang cho xu ly (vui long cho xac nhan)">Dang cho xu ly (vui long cho xac nhan)</option>
                 </select>
             </div>
         )
     }
 
 
-    return(
+    return (
         <div className="grid justify-center">
             <div className="card col-11">
                 <DataTable value={orders} responsiveLayout="scroll">

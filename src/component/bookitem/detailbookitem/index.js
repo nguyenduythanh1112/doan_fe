@@ -50,7 +50,7 @@ function DetailBookItem() {
             })
         }).then(result => {
             setBookItem(JSON.parse(result));
-            toast.success("Load book item success")
+            // toast.success("Load book item success")
         }).catch(error => {
             toast.error("Load book item error")
         });

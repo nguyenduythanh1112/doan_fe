@@ -121,11 +121,11 @@ const AdminBookItem = () => {
 
     const deleteProduct = async () => {
         const respond = await BookItemService.deleteById(product.id);
-        if(respond.ok){
+        if (respond.ok) {
             toast.success("Delete success: " + product.id);
             setRefresh(!refresh);
         }
-        else toast.error("Delete error "+product.id);
+        else toast.error("Delete error " + product.id);
         setDeleteProductDialog(false);
     }
 
@@ -167,7 +167,7 @@ const AdminBookItem = () => {
 
     const header = (
         <div className="table-header">
-            <h5 className="mx-0 my-1">Manage Products</h5>
+            <h5 className="mx-0 my-1">Manage BookItem</h5>
             <span className="p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search..." />
@@ -227,14 +227,15 @@ const AdminBookItem = () => {
                 </DataTable>
             </div>
 
-            <Dialog visible={productDialog} style={{ width: '650px' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={productDialog} style={{ width: '650px' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog} >
 
                 {product.id && <label>Book Item ID: {product.id}</label>}
-                <div className="field"><label>barcode</label><InputText value={product.barcode} onChange={(e) => setProduct({ ...product, barcode: e.target.value })} required /></div>
-                <div className="field"><label>exportedPrice</label><InputText value={product.exportedPrice} onChange={(e) => setProduct({ ...product, exportedPrice: e.target.value })} required /></div>
-                <div className="field"><label>discount</label><InputText value={product.discount} onChange={(e) => setProduct({ ...product, discount: e.target.value })} required /></div>
-                <div className="field"><label>status</label><SelectButton options={["yes", "no"]} value={product.status} onChange={(e) => setProduct({ ...product, status: e.value })} /></div>
-                <label>book</label>
+                <div className="field"><label>Barcode</label><InputText value={product.barcode} onChange={(e) => setProduct({ ...product, barcode: e.target.value })} required /></div>
+                <div className="field"><label>Exported Price</label><InputText value={product.exportedPrice} onChange={(e) => setProduct({ ...product, exportedPrice: e.target.value })} required /></div>
+                <div className="field"><label>Discount</label><InputText value={product.discount} onChange={(e) => setProduct({ ...product, discount: e.target.value })} required /></div>
+                <div className="field"><label>Status</label><SelectButton options={["yes", "no"]} value={product.status} onChange={(e) => setProduct({ ...product, status: e.value })} /></div>
+                {product.id && <p className='m-1'>Book ID: {product.bookModel.id} - {product.bookModel.title} (bạn có thể chọn lại bên dưới)</p>}
+                <p className='my-3'>Book</p>
                 <TreeSelect value={product.bookModel.id} required filter options={getDataSelect()} placeholder="Select Items" onChange={(e) => setProduct({ ...product, bookModel: { ...product.bookModel, id: e.value } })}></TreeSelect>
             </Dialog>
 

@@ -1,4 +1,4 @@
-import { Link , NavLink} from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { UserInformation } from '../../App';
 import { useContext } from 'react';
 import { Menubar } from 'primereact/menubar';
@@ -8,10 +8,10 @@ function UserNavigation() {
     const { userInformation } = useContext(UserInformation);
 
     const items = [
-        {
-            label: <Link to="/">Home</Link>,
-            icon: 'pi pi-home',
-        },
+        // {
+        //     label: <Link to="/">Home</Link>,
+        //     icon: 'pi pi-home',
+        // },
         {
             label: <Link to="/bookitem">Book</Link>,
             icon: 'pi pi-book',

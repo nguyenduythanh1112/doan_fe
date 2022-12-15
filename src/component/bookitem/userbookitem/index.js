@@ -44,8 +44,8 @@ const UserBookItem = () => {
     ];
 
 
-    const [productsInitiation,setProductsInitiation]=useState([]);
-    const [enteredName,setEnteredName]=useState("");
+    const [productsInitiation, setProductsInitiation] = useState([]);
+    const [enteredName, setEnteredName] = useState("");
 
     useEffect(() => {
         BookItemService.bookItemPublic().then(response => {
@@ -56,9 +56,9 @@ const UserBookItem = () => {
         }).then(result => {
             setProducts(JSON.parse(result));
             setProductsInitiation(JSON.parse(result))
-            toast.success("Load book item success")
+            // toast.success("Load book item success")
         }).catch(error => {
-            toast.error("Load book item error")
+            toast.error("Error")
         });
     }, []);
 
@@ -96,16 +96,16 @@ const UserBookItem = () => {
                         <div className="product-name">{bookItem.bookModel.title}</div>
                         <div className="product-description">{bookItem.bookModel.description}</div>
                         <i className="pi pi-tag product-category-icon"></i><span className="product-category">{bookItem.bookModel.category}</span>
-                        <ProgressBar value={bookItem.bookModel.exportedQuantity/bookItem.bookModel.importedQuantity*100} className="m-2"></ProgressBar>
+                        <ProgressBar value={bookItem.bookModel.exportedQuantity / bookItem.bookModel.importedQuantity * 100} className="m-2"></ProgressBar>
                         <Rating value={5} stars={5} cancel={false} className="m-3" />
                     </div>
                     <div className="product-list-action">
-                        <span className="product-price">${bookItem.exportedPrice}</span>
+                        <div className="text-lg">Giá bìa: {bookItem.exportedPrice} VND </div>
+                        <div className="product-price my-3">Giá KM: {bookItem.exportedPrice * (1 - bookItem.discount / 100)} VND </div>
                         <Button icon="pi pi-shopping-cart" label="Add to Cart" onClick={() => handleSaveLineItem(bookItem.id)}></Button>
                         <Link to={`/bookitem/show/${bookItem.id}`} className="block w-full">
                             <Button label='More' className="p-button-outlined p-button-info w-full"></Button>
                         </Link>
-                        <span className="product-badge">Hello</span>
                     </div>
                 </div>
             </div>
@@ -126,10 +126,11 @@ const UserBookItem = () => {
                         <img className="flex m-auto my-3" src={bookItem.bookModel.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={bookItem.name} />
                         <div className="product-name">{bookItem.bookModel.title}</div>
                         {/* <div className="product-description">{bookItem.bookModel.description}</div> */}
-                        <div className="product-price my-3">Price: {bookItem.exportedPrice}</div>
+                        <div className="text-lg my-3">Giá bìa: {bookItem.exportedPrice} VND </div>
+                        <div className="product-price my-3">Giá KM: {bookItem.exportedPrice * (1 - bookItem.discount / 100)} VND </div>
                     </div>
                     <div className='flex flex-column'>
-                        <ProgressBar value={bookItem.bookModel.exportedQuantity/bookItem.bookModel.importedQuantity*100} className="m-2"></ProgressBar>
+                        <ProgressBar value={bookItem.bookModel.exportedQuantity / bookItem.bookModel.importedQuantity * 100} className="m-2"></ProgressBar>
                         <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
                     </div>
                     <div className="product-grid-item-bottom ">
@@ -155,10 +156,11 @@ const UserBookItem = () => {
                         <img className="flex m-auto my-3" src={bookItem.bookModel.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={bookItem.name} />
                         <div className="product-name">{bookItem.bookModel.title}</div>
                         {/* <div className="product-description">{bookItem.bookModel.description}</div> */}
-                        <div className="product-price my-3">Price: {bookItem.exportedPrice}</div>
+                        <div className="text-lg my-3">Giá bìa: {bookItem.exportedPrice} VND </div>
+                        <div className="product-price my-3">Giá KM: {bookItem.exportedPrice * (1 - bookItem.discount / 100)} VND </div>
                     </div>
                     <div className='flex flex-column'>
-                        <ProgressBar value={bookItem.bookModel.exportedQuantity/bookItem.bookModel.importedQuantity*100} className="m-2"></ProgressBar>
+                        <ProgressBar value={bookItem.bookModel.exportedQuantity / bookItem.bookModel.importedQuantity * 100} className="m-2"></ProgressBar>
                         <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
                     </div>
                     <div className="product-grid-item-bottom ">
@@ -184,8 +186,8 @@ const UserBookItem = () => {
 
 
 
-    const handleOnChangeName=(e)=>{
-        setProducts(pre=>productsInitiation.filter(value=>value.bookModel.title.includes(e.target.value)));
+    const handleOnChangeName = (e) => {
+        setProducts(pre => productsInitiation.filter(value => value.bookModel.title.includes(e.target.value)));
         setEnteredName(e.target.value);
     }
 
@@ -195,7 +197,7 @@ const UserBookItem = () => {
                 <div className="col-6" style={{ textAlign: 'left' }}>
                     {/* <Dropdown className='w-full' options={sortOptions} value={sortKey} optionLabel="label" placeholder="Sort By Price" onChange={onSortChange} /> */}
                     <span className="p-float-label mt-4 ">
-                        <InputText  className='w-full' value={enteredName} onChange={e=>handleOnChangeName(e)}/>
+                        <InputText className='w-full' value={enteredName} onChange={e => handleOnChangeName(e)} />
                         <label>Enter book name</label>
                     </span>
                 </div>
