@@ -71,10 +71,12 @@ function DetailBookItem() {
                         <img className="flex m-auto my-3" src={bookItem.bookModel.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={bookItem.name} />
                         <div className="product-name">{bookItem.bookModel.title}</div>
                         <div className="product-description">{bookItem.bookModel.description}</div>
-                        <div className="product-price my-3">Price: {bookItem.exportedPrice}</div>
+                        {/* <div className="product-price my-3">Price: {bookItem.exportedPrice}</div> */}
+                        <div className="text-lg my-3">Giá bìa: {bookItem.exportedPrice} VND </div>
+                        <div className="product-price my-3">Giá KM: {bookItem.exportedPrice * (1 - bookItem.discount / 100)} VND </div>
                     </div>
                     <div className='flex flex-column'>
-                        <ProgressBar value={bookItem.bookModel.exportedQuantity/bookItem.bookModel.importedQuantity*100} className="m-2"></ProgressBar>
+                        <ProgressBar value={bookItem.bookModel.exportedQuantity / bookItem.bookModel.importedQuantity * 100} className="m-2"></ProgressBar>
                         <Rating value={5} stars={5} cancel={false} className="m-3 flex justify-center" />
                     </div>
                     <div className="product-grid-item-bottom ">
@@ -121,12 +123,12 @@ function DetailBookItem() {
                 <div className="col-3">
                     <Panel className="my-2" header="status" toggleable><p>{bookItem.status}</p></Panel>
                     <Panel className="my-2" header="Price" toggleable>
-                        <p>exportedPrice: {bookItem.exportedPrice}</p>
-                        <p>importedPrice: {bookItem.bookModel.importedPrice}</p>
+                        <p>Exported Price: {bookItem.exportedPrice}</p>
+                        <p>Imported Price: {bookItem.bookModel.importedPrice}</p>
                     </Panel>
                     <Panel className="my-2" header="Quantity" toggleable>
-                        <p>importedQuantity: {bookItem.bookModel.importedQuantity}</p>
-                        <p>exportedQuantity: {bookItem.bookModel.exportedQuantity}</p>
+                        <p>Imported Quantity: {bookItem.bookModel.importedQuantity}</p>
+                        <p>Exported Quantity: {bookItem.bookModel.exportedQuantity}</p>
                     </Panel>
                 </div>
             }

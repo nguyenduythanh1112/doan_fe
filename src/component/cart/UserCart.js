@@ -202,8 +202,8 @@ function UserCart() {
                     breakpoints={{ '960px': '75vw' }}
                     style={{ width: '50vw' }}
                     footer={<div>
-                        <Button label="No" icon="pi pi-times" onClick={() => setPaymentDialog(false)} className="p-button-text" />
-                        <Button label="Yes" icon="pi pi-check" autoFocus onClick={e => handleOrder()} />
+                        <Button label="Huỷ" icon="pi pi-times" onClick={() => setPaymentDialog(false)} className="p-button-text" />
+                        <Button label="Đặt" icon="pi pi-check" autoFocus onClick={e => handleOrder()} />
                     </div>}>
                     <h1 className="text-center uppercase text-2xl font-bold">Phí sách và vận chuyển: {totalPrice + shipment.amount || 0} VND </h1>
                     {payment.amount >= 0 ? <h1 className="text-center  text-2xl ">Phí hình thức thanh toán: {payment.amount} VND</h1> : "Bạn cần chọn hình thức thanh toán"}
