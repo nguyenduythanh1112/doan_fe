@@ -212,7 +212,7 @@ const AdminBookItem = () => {
                     <Column field="bookModel.title" header="title" sortable ></Column>
                     <Column field="bookModel.numberOfPage" header="numberOfPage" sortable ></Column>
                     <Column field="bookModel.language" header="language" sortable ></Column>
-                    <Column field="bookModel.file" header="file" sortable ></Column>
+                    {/* <Column field="bookModel.file" header="file" sortable ></Column> */}
                     <Column field="bookModel.description" header="description" sortable ></Column>
                     <Column field="bookModel.importedPrice" header="importedPrice" sortable ></Column>
                     <Column field="bookModel.importedQuantity" header="importedQuantity" sortable ></Column>

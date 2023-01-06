@@ -45,17 +45,17 @@ const ShowBook = () => {
     const exportCSV = () => { dt.current.exportCSV(); }
     const leftToolbar = () => <Link to="/book/save"><Button label="New Book" icon="pi pi-plus" className="p-button-success mr-2" /></Link>
     const imageBody = (rowData) => <img src={rowData.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={rowData.image} className="product-image h-12 w-auto" />
-    
-    
-    const deleteProduct =async () => {
+
+
+    const deleteProduct = async () => {
         const respond = await BookService.deleteById(bookId);
-        if(respond.ok){
+        if (respond.ok) {
             toast.success("Delete success: " + bookId);
             setRefresh(!refresh);
         }
-        else toast.error("Delete error "+bookId);
+        else toast.error("Delete error " + bookId);
         setDeleteBookDialog(false);
-        
+
     }
 
     const rightToolbar = (
@@ -107,7 +107,7 @@ const ShowBook = () => {
                     <Column field="title" header="title" sortable style={{ minWidth: '9rem' }}></Column>
                     <Column field="numberOfPage" header="numberOfPage" sortable ></Column>
                     <Column field="language" header="language" sortable ></Column>
-                    <Column field="file" header="file" sortable style={{ minWidth: '9rem' }}></Column>
+                    <Column body={(data) => <a href={data.file}>Click here</a>} header="file" sortable style={{ minWidth: '9rem' }}></Column>
                     <Column field="description" header="description" sortable style={{ minWidth: '25rem' }}></Column>
                     <Column field="importedPrice" header="importedPrice" sortable ></Column>
                     <Column field="importedQuantity" header="importedQuantity" sortable></Column>
